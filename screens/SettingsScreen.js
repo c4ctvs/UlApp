@@ -3,7 +3,9 @@ import { View, StyleSheet, Button, Alert, Text } from 'react-native';
 import useStatusBar from '../hooks/useStatusBar';
 import SafeView from '../components/SafeView';
 import Colors from '../utils/colors';
-import { logout } from '../components/Firebase/firebase';
+import { logout, getEmail } from '../components/Firebase/firebase';
+import settingsButton from  '../components/settingsButton';
+
 
 
 export default function SettingsScreen({navigation}) {
@@ -15,14 +17,24 @@ export default function SettingsScreen({navigation}) {
       console.log(error);
     }
   }
+  const [email, setEmail] = useState()
 
+  useEffect(() => {
+      const email = async () => {
+          let newDoc = await getEmail()
+          setEmail(newDoc)
+      }
+      email()
+  })
   
   return (
     <SafeView style={styles.container}>
-        <Text style={styles.header}>Ustawienia</Text>
-        <Text>Zmień hasło </Text>
-        <Text> Wyzwalacze </Text>
-        <Button title="Wyloguj się" style={styles.logoutButton} onPress={handleSignOut} />
+        <Text style={styles.header}>Zalogowany jako: {email}</Text> 
+        <settingsButton title="Wyloguj się" style={styles.logoutButton} onPress={handleSignOut} />
+        <settingsButton title="Zmień haslo" style={styles.logoutButton} />
+        <settingsButton title="Zmień wyzwalacze" style={styles.logoutButton} />
+        
+       
        
     </SafeView>
     
@@ -34,12 +46,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    justifyContent: 'center',
     alignItems: 'center',
   },
   logoutButton: {
+    padding:20,
 
-    width: '30%',
   },
   menuButton:{
     margin:30,
@@ -49,11 +60,10 @@ const styles = StyleSheet.create({
     fontSize:12,
   },
   header:{
-    justifyContent: 'center',
     alignItems: 'center',
-    fontSize:30,
+    fontSize:20,
     color:Colors.lightGrey,
-    padding:100
+    marginTop:100
 },
 
 });

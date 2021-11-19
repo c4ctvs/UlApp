@@ -21,16 +21,16 @@ export const registerWithEmail = (email, password) =>{
 
   let db = firebase.firestore();
   db.collection("userInfo").doc(email).collection("tasks").doc(0).set({
-    avaiable:true
+    "avaiable":true
   })
   db.collection("userInfo").doc(email).collection("tasks").doc(1).set({
-    avaiable:false
+    "avaiable":false
   })
-  db.collection("userInfo").collection("tasks").doc(2).set({
-    avaiable:false
+  db.collection("userInfo").doc(email).collection("tasks").doc(2).set({
+    "avaiable":false
   })
-  db.collection("userInfo").collection("tasks").doc(3).set({
-    avaiable:false
+  db.collection("userInfo").doc(email).collection("tasks").doc(3).set({
+    "avaiable":false
   })
 }
 
@@ -47,6 +47,10 @@ export const logout = () => auth.signOut();
 
 export const passwordReset = email => auth.sendPasswordResetEmail(email);
 
+export const getEmail = () => {
+  const user = firebase.auth().currentUser;
+  return user.email;
+}
 
 export const validateCodeTwo = async (code) => {
   let db = firebase.firestore();

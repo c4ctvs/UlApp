@@ -8,7 +8,7 @@ import { checkIfUserIsLoggedIn } from '../components/Firebase/firebase';
 import { getNamesOfCategories } from '../components/Firebase/firebase';
 export default function WelcomeScreen({ navigation }) {
   
-  console.ignoredYellowBox = ['Setting a timer']
+
 checkIfUserIsLoggedIn()
   useStatusBar('light-content');
 
@@ -17,8 +17,7 @@ checkIfUserIsLoggedIn()
 
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-      <Text style={styles.subtitle}>UpApp</Text>
-        <Image source={require('../assets/flame.png')} style={styles.logo} />
+        <Image source={require('../assets/logo.PNG')} style={styles.logo} />
         
       </View>
       <View style={styles.buttonContainer}>

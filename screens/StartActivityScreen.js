@@ -17,6 +17,16 @@ const screen = route.params;
 
 const [doc, setDocs] = useState([])
 const { width, height } = Dimensions.get('window');
+const [label, setLabel] = useState([])
+
+useEffect((value) => {
+  if(value < 100)
+      setLabel = ":)"
+  if(value < 200)
+      setLabel = ":|" 
+  if(value >= 200)
+      setLabel = ":("
+})
 
 console.log("id: " + JSON.stringify(route))
 useEffect(() => {
@@ -62,10 +72,10 @@ return(
                     {data.slider != "" ? <BigSlider
                                         horizontal
                                         maximumValue={240}
-                                       
+                                        
                                         style={{ backgroundColor: 'rgba(0,0,0,.7)', width: 40, marginBottom:160, marginTop:40, marginHorizontal:40, position:'absolute', top:height/4, height:200 }}
                                         trackStyle={{ backgroundColor: 'rgba(143, 255, 160, .7)' }}
-                                        label=" "
+                                        label={label}
                                         minimumValue={0} /> : <></>}
                    
                     {data.subtitle3 != "" ?<Text style={styles.subtitle}> {data.subtitle3} </Text> : <></>}
