@@ -8,8 +8,7 @@ import { checkIfUserIsLoggedIn } from '../components/Firebase/firebase';
 import { getNamesOfCategories } from '../components/Firebase/firebase';
 export default function WelcomeScreen({ navigation }) {
   
-
-checkIfUserIsLoggedIn()
+  checkIfUserIsLoggedIn()
   useStatusBar('light-content');
 
   console.log("hello")
@@ -17,11 +16,12 @@ checkIfUserIsLoggedIn()
 
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <Image source={require('../assets/logo.PNG')} style={styles.logo} />
+    
+        <Image source={require('../assets/logo2.png')} style={styles.logo} />
         
       </View>
       <View style={styles.buttonContainer}>
-      <AppButton title="First time"color="lightGrey" onPress={() => navigation.navigate('FirstTimeLogin')} />
+
       
         <AppButton title="Login"color="lightGrey" onPress={() => navigation.navigate('Login')} />
         <AppButton
@@ -48,8 +48,10 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   logo: {
-    width: 125,
-    height: 125
+    justifyContent:'space-evenly',
+    marginTop:120,
+    width: 400,
+    height: 400
   },
   subtitle: {
     fontSize: 24,

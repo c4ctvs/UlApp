@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Modal, View } from 'react-native';
+import { StyleSheet, Modal, View, Image, Alert } from 'react-native';
 import * as Yup from 'yup';
 
 import Colors from '../utils/colors';
@@ -15,16 +15,16 @@ import MyModal from '../components/misc/Modal';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .required('Please enter a valid email')
+    .required('Wprowadź poprawny email')
     .email()
     .label('Email'),
   password: Yup.string()
     .required()
-    .min(6, 'Password must have at least 6 characters')
+    .min(6, 'Hasło musi mieć conajmniej 6 znaków')
     .label('Password'),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Confirm Password must match Password')
-    .required('Confirm Password is required')
+    .oneOf([Yup.ref('password')], 'Hasła muszą się zgadzać')
+    .required('Potwierdź hasło')
 });
 
 export default function RegisterScreen({ navigation }) {
@@ -63,7 +63,7 @@ export default function RegisterScreen({ navigation }) {
     try {
       await registerWithEmail(email, password);
     } catch (error) {
-      setRegisterError(error.message);
+      Alert.alert(error.message);
     }
   }
   const [modalVisible, setModalVisible] = useState(true);
@@ -71,7 +71,7 @@ export default function RegisterScreen({ navigation }) {
 
    
     <SafeView style={styles.container}>
-   
+           <Image source={require('../assets/logo2.png')} style={styles.logo} />
       <Form
         initialValues={{
           email: '',
@@ -134,7 +134,7 @@ export default function RegisterScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15,
+ 
     backgroundColor: Colors.background
     
   },
@@ -145,8 +145,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 10
-  }
-  
+  },
+  logo: {
+    justifyContent:'space-evenly',
+    marginTop:30,
+    width: 400,
+    height: 400
+  },
   
 
 });

@@ -8,7 +8,7 @@ import ColorsB from '../utils/colors.js'
 import BigSlider from 'react-native-big-slider'
 import NextBackButton from '../components/NextBackButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import { sendData } from '../components/Firebase/firebase';
 
 
 export default function StartActivity({ route, navigation}) {
@@ -17,21 +17,22 @@ const screen = route.params;
 
 const [doc, setDocs] = useState([])
 const { width, height } = Dimensions.get('window');
-const [label, setLabel] = useState([])
+const [value_, setValue] = useState()
+const [text, setText] = useState('')
 
-useEffect((value) => {
-  if(value < 100)
-      setLabel = ":)"
-  if(value < 200)
-      setLabel = ":|" 
-  if(value >= 200)
-      setLabel = ":("
-})
+let handleOnSend = async (doc, values) =>{
+  console.log("topic" + doc)
+  sendData(screen.topic, doc, values).then( () => {
+    navigation.navigate('Home')
+  })
+
+ 
+}
 
 console.log("id: " + JSON.stringify(route))
 useEffect(() => {
     const getDocs = async () => {
-        let newDoc = await getTask(JSON.stringify(0), JSON.stringify(screen.id))
+        let newDoc = await getTask(JSON.stringify(screen.topic), JSON.stringify(screen.id))
         setDocs(newDoc)
     }
     getDocs()
@@ -45,21 +46,24 @@ return(
           horizontal={true}
           scrollEventThrottle={16}
           pagingEnabled={true}
+          showsVerticalScrollIndicator={true}
 
           >
         {
             doc.map((data) => {
             return(
                 <View style={{ width, height }} >
-                    {console.log("GreenTitle: " + data.greenTitle + typeof data.greenTitle)}
                     {data.weekTitle ? <Text style={styles.weekTitle}>{data.weekTitle}</Text> : <></>}
                     {data.weekSubtitle ? <Text style={styles.weekSubtitle}>{data.weekSubtitle}</Text> : <></>}
                     {data.greenTitle ? data.greenTitle == "ZADANIE" ? <Text style={styles.greenTitle}><MaterialCommunityIcons name="square-edit-outline" color={"#ffffff"} size={50} />  {data.greenTitle}</Text>: <Text style={styles.greenTitle}>{data.greenTitle}</Text> : <></>}
+                    
                     {data.textInput ?   <TextInput
                                         multiline
                                         style={styles.input}
                                         placeholder={"Wpisz notatkę"}
+                                        onChangeText={text => setText(text)}
                                       /> : <></>}
+                                      
                     {data.subtitle ? <Text style={styles.subtitle}> {data.subtitle} </Text> : <></>}
                     {data.line  ?<Text style={{ borderBottomColor: '#3d7849',
                                    borderBottomWidth: 6,
@@ -67,26 +71,28 @@ return(
                         
                                    
                                    }}></Text> : <></>}
-                    {data.subtitle2 != "" ?<Text style={styles.subtitle}> {data.subtitle2} </Text> : <></>}
-                    
-                    {data.slider != "" ? <BigSlider
+                                   
+                    {data.subtitle2 ?<Text style={styles.subtitle}> {data.subtitle2} </Text> : <></>}
+                
+                    {data.slider ? <BigSlider
                                         horizontal
                                         maximumValue={240}
-                                        
+                             
                                         style={{ backgroundColor: 'rgba(0,0,0,.7)', width: 40, marginBottom:160, marginTop:40, marginHorizontal:40, position:'absolute', top:height/4, height:200 }}
                                         trackStyle={{ backgroundColor: 'rgba(143, 255, 160, .7)' }}
-                                        label={label}
+                                        label=" "
                                         minimumValue={0} /> : <></>}
                    
-                    {data.subtitle3 != "" ?<Text style={styles.subtitle}> {data.subtitle3} </Text> : <></>}
-                    {data.summary != "" ?<Text style={styles.summary}> {data.summary} </Text> : <></>}
-                    {data.button1 != ""?
+                    {data.subtitle3 ?<Text style={styles.subtitle}> {data.subtitle3} </Text> : <></>}
+                    {data.summary  ?<Text style={styles.summary}> {data.summary} </Text> : <></>}
+                    {data.send  ?  <NextBackButton title="Wyślij" onPress={() => handleOnSend(data.id, text)}/> : <></>} 
+                    {data.button1 ?
                         <View style={styles.parent}>
                             <NextBackButton  title={data.button1} />
                             <NextBackButton title={data.button2} /> 
                         </View>: <></>}
-                    {data.send != "" ?  <NextBackButton  title="Wyślij" /> : <></>}  
-                    {data.hint != "" ?<Text style={styles.hint}> {data.hint} </Text> : <></>}
+                  
+                    {data.hint ?<Text style={styles.hint}> {data.hint} </Text> : <></>}
                 
                 </View>
             )
@@ -101,7 +107,8 @@ const styles = StyleSheet.create({
   parent:{
     flexDirection:'row',
     justifyContent:'space-between',
-    margin:40
+    margin:30,
+    marginTop:50
   },
   buttons:{
     position:'absolute',
@@ -190,7 +197,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginHorizontal:30,
         fontFamily:'sans-serif-light',
-        marginTop:120,
+        marginTop:280,
          
       },
       hint: {

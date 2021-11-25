@@ -1,26 +1,64 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, Alert, Text } from 'react-native';
+import { View, StyleSheet, Button, Alert, Text, TouchableOpacity } from 'react-native';
 import useStatusBar from '../hooks/useStatusBar';
 import SafeView from '../components/SafeView';
 import Colors from '../utils/colors';
 import { logout } from '../components/Firebase/firebase';
-
+import { getDays, getAvaiability } from '../components/Firebase/firebase';
 
 export default function MaterialsScreen({navigation}) {
-  useStatusBar('dark-content');
-  async function handleSignOut() {
-    try {
-      await logout();
-    } catch (error) {
-      console.log(error);
-    }
+
+  const [days, setDays] = useState([])
+  const [buttonData, getButtonData] = useState([])
+  
+   
+useEffect(() => {
+  const get = async () => {
+      let data = await getAvaiability(0)
+      getButtonData(data)
   }
+  get()
+}, [])
+
+let i=0
+
+useEffect(() => {
+  const getDaystoDisplay = async () => {
+      let newDay = await getDays(JSON.stringify(0))
+      console.log("Day: " + newDay)
+      setDays(newDay)
+  }
+  getDaystoDisplay()
+}, [])
+
 
   
   return (
     <SafeView style={styles.container}>
-        <Text style={styles.header}>Materiały dodatkowe</Text>
- 
+        <Text style={styles.header}>Twoje wykonane zadania:</Text>
+        {   
+
+          days.map((data) => {
+    
+          if(buttonData[i].done == true){
+          i=i+1
+              return(    
+              <TouchableOpacity disabled={true}style={styles.appButtonContainer}>   
+              {data.cat ? <Text style={styles.title}> {data.cat} </Text> : <></>}
+              <Text style={styles.subtitleDone}> Dzień {data.name}</Text>
+              </TouchableOpacity>    
+              )
+          }
+          else{
+            i=i+1
+          }
+        
+          }
+
+          )
+
+          }
+          <Text style={styles.header}>Materiały do odblokowania:</Text>     
        
     </SafeView>
     
@@ -28,7 +66,15 @@ export default function MaterialsScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  subtitleDone: {
+    fontSize: 18,
+    color: 'white',
+    textAlign: 'center',
+    marginHorizontal:30,
+    fontFamily:'sans-serif-light',
 
+
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.background,
@@ -49,9 +95,15 @@ const styles = StyleSheet.create({
   header:{
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize:30,
+    fontSize:20,
     color:Colors.lightGrey,
-    padding:100
+    marginVertical:10
+},
+title:{
+
+  fontSize:18,
+  textAlign:'center',
+  color: '#369e40',
 },
 
 });

@@ -35,31 +35,32 @@ return(
         {
             doc.map((data) => {
             return(
-                <View style={{ width, height }} >
-                    {data.title != "" ? <Text style={styles.title}>{data.title}</Text> : <></> }
-                    <Text style={styles.subtitle}> {data.subtitle} </Text>
-                    <Text style={styles.subtitle}> {data.subtitle2} </Text>
+                <View style={{ width, height, justifyContent: 'center',flex: 1 }} >
+                    {data.title? <Text style={styles.title}>{data.title}</Text> : <></> }
+                    {data.subtitle ? <Text style={styles.subtitle}> {data.subtitle} </Text> : <></>}
+                    {data.subtitle2 ?<Text style={styles.subtitle}> {data.subtitle2} </Text> :<></>}
                     
-                    <Text style={{opacity: data.greenField,
+                    {data.greenField ?<Text style={{opacity: data.greenField,
                                   color: '#3d7849',
                                   fontFamily:'sans-serif-medium',
                                   fontSize: 22,
                                   textAlign:'center',
                                   backgroundColor: '#c2c2c2',
-                                  padding: 15}}> {data.greenText} </Text>
                    
-                    <Text style={styles.subtitle}> {data.subtitle3} </Text>
-                    <Text style={styles.summary}> {data.summary} </Text>
+                                  padding: 15}}> {data.greenText} </Text> :<></>}
+                   
+                   {data.subtitle3 ? <Text style={styles.subtitle}> {data.subtitle3} </Text> :<></>}
+                   {data.summary ?<Text style={styles.summary}> {data.summary} </Text> : <></>}
 
-                    <Text style={{ borderBottomColor: '#3d7849',
+                   {data.line ? <Text style={{ borderBottomColor: '#3d7849',
                                    borderBottomWidth: 6,
                                    opacity:data.line,
+    
                                    
-                                   
-                                   }}></Text>
-                     <View style={styles.buttonsContainer}>
-                         <NextBackButton title="Powrót" />
-                         <NextBackButton title="Dalej" onPress={() => { navigation.navigate('ChooseDayScreen'), {id: screen.id}}}/>
+                                   }}></Text> : <></>}
+                      <View style={styles.buttonsContainer}>
+                     
+                       {data.button ? <NextBackButton title="Dalej" onPress={() => { navigation.navigate('ChooseDayScreen', {id: screen.id})}}/> : <></>}
                     </View>
                 </View>
             )
@@ -73,7 +74,7 @@ return(
 const styles = StyleSheet.create({
     buttonsContainer:{
       flexDirection:'row',
-      justifyContent:'space-between',
+      justifyContent:'flex-end',
       margin:40
     },
     image: {

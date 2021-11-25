@@ -20,20 +20,49 @@ export const registerWithEmail = (email, password) =>{
   auth.createUserWithEmailAndPassword(email, password);
 
   let db = firebase.firestore();
-  db.collection("userInfo").doc(email).collection("tasks").doc(0).set({
-    "avaiable":true
+  db.collection("userInfo").doc(email).set({
+    "firstLogin":true
   })
-  db.collection("userInfo").doc(email).collection("tasks").doc(1).set({
-    "avaiable":false
-  })
-  db.collection("userInfo").doc(email).collection("tasks").doc(2).set({
-    "avaiable":false
-  })
-  db.collection("userInfo").doc(email).collection("tasks").doc(3).set({
-    "avaiable":false
-  })
+
+  for(let j=0; j<4; j++){
+    db.collection("userInfo").doc(email).collection("tasks").doc(JSON.stringify(j)).set({
+        "avaiable":false
+    })
+    for(let i=0; i<5; i++){
+      db.collection("userInfo").doc(email).collection("tasks").doc(JSON.stringify(j)).collection("days").doc(JSON.stringify(i)).set({
+        "avaiable":false,
+        "done":false
+      })
+    }
+}
+db.collection("userInfo").doc(email).collection("tasks").doc(JSON.stringify(0)).set({
+  "avaiable":true
+})
+db.collection("userInfo").doc(email).collection("tasks").doc(JSON.stringify(0)).collection("days").doc(JSON.stringify(0)).set({
+  "avaiable":true,
+  "done":false
+})
 }
 
+export const firstLogin = async () => {
+  let db = firebase.firestore();
+  const user = firebase.auth().currentUser
+  let query = await  db.collection("userInfo").doc(user.email).get()
+  return query.data().firstLogin
+}
+
+export const getAvaiability = async (doc) => {
+  let db = firebase.firestore();
+  const user = firebase.auth().currentUser;
+  let values = await db.collection("userInfo").doc(user.email).collection("tasks").doc(JSON.stringify(doc)).collection("days").get()
+  let results = []
+
+  values.forEach((doc) => {
+    results.push(doc.data())
+
+  })
+  return results
+}
 
 export const checkIfUserIsLoggedIn = () => {
   firebase.auth().onAuthStateChanged((user) => {
@@ -57,7 +86,7 @@ export const validateCodeTwo = async (code) => {
   db.collection("registerCodes").get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log("Val " + doc.data().Value + "Av" + doc.data().Avaiable)
+
         if (doc.data().Value == code && doc.data().Avaiable == true)
           return true
       });
@@ -82,8 +111,61 @@ export const validateCode = async (code) => {
   })
   return validated
 }
+export const sendData = async(topic, doc, data) =>{
+  let db = firebase.firestore();
+  const user = firebase.auth().currentUser;
+
+  db.collection("userInfo").doc(user.email).collection("tasks").doc(JSON.stringify(topic)).collection("days").doc(doc).update({
+    "data":data,
+    "time": firebase.firestore.Timestamp.now(),
+    "done":true
+  })
+
+  var d = new Date();
+
+  d.setHours(24,0,0,0); 
+
+  if(doc == 0){
+    db.collection("userInfo").doc(user.email).collection("tasks").doc(JSON.stringify(topic)).collection("days").doc(JSON.stringify(1)).update({
+      "time": firebase.firestore.Timestamp.fromDate(d)
+    })
+  }else if(doc == 1){
+    db.collection("userInfo").doc(user.email).collection("tasks").doc(JSON.stringify(topic)).collection("days").doc(JSON.stringify(2)).update({
+      "time": firebase.firestore.Timestamp.fromDate(d)
+    })
+  } else if(doc == 2){
+    db.collection("userInfo").doc(user.email).collection("tasks").doc(JSON.stringify(topic)).collection("days").doc(JSON.stringify(3)).update({
+      "time": firebase.firestore.Timestamp.fromDate(d)
+    })
+  }else if(doc == 3){
+    db.collection("userInfo").doc(user.email).collection("tasks").doc(JSON.stringify(topic)).collection("days").doc(JSON.stringify(4)).update({
+      "time": firebase.firestore.Timestamp.fromDate(d)
+    })
+  }
+
+}
 
 
+export const updateAv = async(doc) =>{
+  let db = firebase.firestore();
+  const user = firebase.auth().currentUser;
+  let results = []
+  let values = await db.collection("userInfo").doc(user.email).collection("tasks").doc(JSON.stringify(doc)).collection("days").get()
+
+  values.forEach((doc) => {
+    results.push(doc.data())
+ 
+  })
+  console.log(results)
+  results.map((data) => {
+   
+    if(data.time <= firebase.firestore.Timestamp.now() && data.done == false){
+      db.collection("userInfo").doc(user.email).collection("tasks").doc(JSON.stringify(doc)).collection("days").doc(data.id).update({
+        "avaiable": true
+      })
+    }
+  })
+}
 export const getNamesOfCategories = async () => {
   let db = firebase.firestore();
   let result = []
@@ -96,7 +178,6 @@ export const getNamesOfCategories = async () => {
   let isAvaiable = await db.collection("userInfo").doc(user.email).collection("tasks").get()
 
   isAvaiable.forEach((doc) => {
-    console.log("A" + doc.data().avaiable)
     avaiable.push(doc.data().avaiable)
   })
   
@@ -151,22 +232,18 @@ export const getTitle = async (document) =>{
     results.push(doc.data())
 
   })
-  console.log("results:", results)
   return results
 }
 
 
 
-export const getTask = async (document, day) =>{
-  console.log("Halo getTitle nie dziala jak cos")
+export const getTask = async (topic, day) =>{
+
   let db = firebase.firestore();
-  let values = await db.collection("tasks").doc(document).collection("days").doc(day).collection("pages").get()
+  let values = await db.collection("tasks").doc(topic).collection("days").doc(day).collection("pages").get()
   let results = []
   values.forEach((doc) => {
-    console.log("A" + doc.data())
     results.push(doc.data())
-
   })
-  console.log("results:", results)
   return results
 }

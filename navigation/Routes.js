@@ -1,17 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { auth } from '../components/Firebase/firebase';
+import { auth, firstLogin } from '../components/Firebase/firebase';
 import navigationTheme from './navigationTheme';
 import AuthStack from './AuthStack';
 import AppStack from './AppStack';
+
 import { AuthUserContext } from './AuthUserProvider';
 import Spinner from '../components/Spinner';
 import BottomTabNavigator from './TabNavigator';
+
 export default function Routes() {
   const { user, setUser } = useContext(AuthUserContext);
   const [isLoading, setIsLoading] = useState(true);
+ 
 
+  
   useEffect(() => {
     // onAuthStateChanged returns an unsubscriber
     const unsubscribeAuth = auth.onAuthStateChanged(async authUser => {

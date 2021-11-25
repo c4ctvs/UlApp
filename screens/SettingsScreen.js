@@ -4,11 +4,10 @@ import useStatusBar from '../hooks/useStatusBar';
 import SafeView from '../components/SafeView';
 import Colors from '../utils/colors';
 import { logout, getEmail } from '../components/Firebase/firebase';
-import settingsButton from  '../components/settingsButton';
+import MenuAppButton from '../components/MenuAppButton';
 
 
-
-export default function SettingsScreen({navigation}) {
+export default function SettingsScreen() {
   useStatusBar('dark-content');
   async function handleSignOut() {
     try {
@@ -30,11 +29,11 @@ export default function SettingsScreen({navigation}) {
   return (
     <SafeView style={styles.container}>
         <Text style={styles.header}>Zalogowany jako: {email}</Text> 
-        <settingsButton title="Wyloguj się" style={styles.logoutButton} onPress={handleSignOut} />
-        <settingsButton title="Zmień haslo" style={styles.logoutButton} />
-        <settingsButton title="Zmień wyzwalacze" style={styles.logoutButton} />
+        <MenuAppButton title="Wyloguj się" style={styles.logoutButton} onPress={handleSignOut} />
+        <MenuAppButton title="Zmień haslo" style={styles.logoutButton} />
+        <MenuAppButton title="Zmień wyzwalacze" style={styles.logoutButton} />
         
-       
+
        
     </SafeView>
     

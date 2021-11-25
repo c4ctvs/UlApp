@@ -5,13 +5,14 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import AppStack from "./AppStack";
 import SettingsScreen from "../screens/SettingsScreen";
 import MaterialsScreen from "../screens/MaterialsScreen";
+
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator  screenOptions={{ headerShown: false }}>
 
-      <Tab.Screen name="Główna" component={AppStack}     options={{
+      <Tab.Screen name="Główna" component={AppStack} options={{
           tabBarLabel: 'Główna',
           tabBarInactiveTintColor:"#2b2b2b",
           tabBarActiveTintColor:"#106e0b",

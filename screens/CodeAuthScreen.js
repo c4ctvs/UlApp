@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Modal, View, Alert } from 'react-native';
+import { StyleSheet, Modal, View, Alert, Image } from 'react-native';
 import * as Yup from 'yup';
 
 import Colors from '../utils/colors';
@@ -21,11 +21,12 @@ export default function RegisterScreen({ navigation }) {
   async function checkCode(values, actions) {
     const { code } = values;
     let isValidated = await validateCode(code)
-    console.error("Is validated: " + isValidated)
+ 
      if(isValidated){
         navigation.navigate("Register")
      }
-     Alert.alert("Bad code!😢")
+     else
+     Alert.alert("Wprowadzony kod jest niepoprawny.")
   }
 
 
@@ -34,7 +35,7 @@ export default function RegisterScreen({ navigation }) {
 
    
     <SafeView style={styles.container}>
-   
+       <Image source={require('../assets/logo2.png')} style={styles.logo} />
       <Form
         initialValues={{
           code :''
@@ -42,16 +43,17 @@ export default function RegisterScreen({ navigation }) {
         }}
         onSubmit={values => checkCode(values)}
       >
-    
+      <View style={styles.field}>
         <FormField
           name="code"
           leftIcon="lock"
           placeholder="Wprowadź kod"
           autoCapitalize="none"
           autoCorrect={false}
-     
+          color={Colors.white}
           textContentType="name"
         />
+        </View>
         <FormButton title={'Sprawdź'} />
 
       </Form>
@@ -71,7 +73,7 @@ export default function RegisterScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15,
+    
     backgroundColor: Colors.background
     
   },
@@ -82,8 +84,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 10
+  },
+  logo: {
+    justifyContent:'space-evenly',
+    marginTop:120,
+    width: 400,
+    height: 400
+  },
+  
+  field:{
+    marginHorizontal:20
   }
-  
-  
 
 });

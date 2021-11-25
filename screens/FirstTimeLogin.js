@@ -3,6 +3,11 @@ import {View, Text, Image, StyleSheet, StatusBar} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import Colors from '../utils/colors.js'
 
+import AppButton from '../components/AppButton';
+import navigationTheme from '../navigation/navigationTheme.js';
+import { useNavigation } from '@react-navigation/core';
+
+
 const data = [
   {
     subtitle: 'Cześć! \n Cieszę się, że bierzesz udział w naszym \n PROGRAMIE ROZWOJOWYM.',
@@ -17,12 +22,26 @@ const data = [
   },
   {
     subtitle: 'W wiadomościach znajdziesz przydatne informacje, techniki i działania, dotyczące takich tematów, jak:',
-    circleTexta: "KONTRAKTOWANIE i umawianie się z innymi tak, aby wywiązać się ze zobowiązań zawodowych  i domowych",
-    circleTextb: "RADZENIE SOBIE W SYTUACJACH TRUDNYCH i konfliktowych, tak aby zadbać o dobre relacje",
-    circleTextc: "RADZENIE SOBIE Z EMOCJAMI i napięciem",
-    circleTextd: "BUDOWANIE POCZUCIA WŁASNEJ SKUTECZNOŚCI i efektywności osobistej",
+    circleTextTitlea: "KONTRAKTOWANIE",
+    circleTexta:"i umawianie się z innymi tak, aby wywiązać się ze zobowiązań zawodowych  i domowych",
+    circleTextTitleb:"RADZENIE SOBIE W SYTUACJACH TRUDNYCH",
+    circleTextb: " i konfliktowych, tak aby zadbać o dobre relacje",
+    circleTextTitlec:"RADZENIE SOBIE Z EMOCJAMI ",
+    circleTextc: "i napięciem",
+    circleTextTitled:"BUDOWANIE POCZUCIA WŁASNEJ SKUTECZNOŚCI",
+    circleTextd: "i efektywności osobistej",
     bg: Colors.background,
   },
+  {
+    bg: Colors.background,
+    description1:'W każdej wiadomości zaproszę Cię  do krótkich ZADAŃ związanych z zapisaniem najważniejszych wniosków, przyjrzeniem się wybranej sytuacji, wypróbowaniem przedstawionej techniki w praktyce. ​ ',
+    description2:'TO TY WYBIERZESZ, które z prezentowanych elementów są dla Ciebie ważne i które z nich zechcesz wykorzystać dla siebie. Zachęcam Cię do zapoznania się z treścią wszystkich wiadomości i wykonania wszystkich zadań. ​ ',
+  },
+  {
+    bg: Colors.background,
+    text:'Abyś mógł śledzić swoje postępy proszę Cię o odpowiedź na kilka krótkich pytań dotyczących napięcia, które odczuwasz w różnych sytuacjach życiowych.  ',
+    button:"ODPOWIEDZ NA PYTANIA"
+  }
 ];
 
 
@@ -70,11 +89,53 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
 
-  }
+  },
+  circleTitlea:{
+    marginHorizontal:50,
+    fontSize:18,
+    textAlign:'left',
+    color: '#369e40',
+  },
+  circleTexta:{
+    textAlign:'center',
+    marginBottom:50,
+    marginHorizontal:70,
+    color:'white',
+
+  },
+  circleTitleb:{
+    marginHorizontal:50,
+    fontSize:18,
+    textAlign:'center',
+    color: '#369e40',
+  },
+  circleTextb:{
+    textAlign:'center',
+    marginBottom:50,
+    marginHorizontal:70,
+    color:'white',
+  },
+  description1: {
+    color: 'white',
+    textAlign: 'left',
+    fontSize: 16,
+    marginHorizontal: 30,
+    marginVertical:50
+
+  },
+  description2: {
+    color: 'white',
+    textAlign: 'right',
+    fontSize: 16,
+    marginHorizontal: 30,
+    marginVertical:50
+
+  },
+ 
 });
 
-export default class App extends React.Component {
-  _renderItem = ({item}) => {
+ class IntroSlider extends React.Component {
+  _renderItem = ({item, navigation}) => {
     return (
       <View
         style={[
@@ -83,22 +144,37 @@ export default class App extends React.Component {
             backgroundColor: item.bg,
           },
         ]}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.secondtitle}>{item.secondtitle}</Text>
-        <Text style ={styles.subtitle}> {item.subtitle} </Text>
-        <Text style ={styles.secondsubtitle}> {item.secondsubtitle} </Text>
-        <Text style ={styles.circleTexta}> {item.circleTexta} </Text>
-        <Text style ={styles.circleTextd}> {item.circleTextb} </Text>
-        <Text style ={styles.circleTextc}> {item.circleTextc} </Text>
-        <Image source={item.image} style={styles.image}  />
-        <Text style={styles.text}>{item.text}</Text>
-      </View>
+        {item.tile ?  <Text style={styles.title}>{item.title}</Text> : <></>}
+        {item.secondtitle ? <Text style={styles.secondtitle}>{item.secondtitle}</Text> : <></>}
+        {item.subtitle ? <Text style ={styles.subtitle}> {item.subtitle} </Text>: <></>}
+        {item.secondsubtitle ? <Text style ={styles.secondsubtitle}> {item.secondsubtitle} </Text>: <></>}
+        
+        {item.circleTextTitlea ? <Text style ={styles.circleTitlea}> {item.circleTextTitlea} </Text>: <></>}
+        {item.circleTexta ? <Text style ={styles.circleTexta}> {item.circleTexta} </Text>: <></>}
+
+        {item.circleTextTitlea ? <Text style ={styles.circleTitleb}> {item.circleTextTitleb} </Text>: <></>}
+        {item.circleTextb ? <Text style ={styles.circleTextb}> {item.circleTextb} </Text>: <></>}
+
+        {item.circleTextTitlea ? <Text style ={styles.circleTitlea}> {item.circleTextTitlec} </Text>: <></>}
+        {item.circleTextc ? <Text style ={styles.circleTexta}> {item.circleTextc} </Text>: <></>}
+
+        {item.circleTextTitlea ? <Text style ={styles.circleTitleb}> {item.circleTextTitled} </Text>: <></>}
+        {item.circleTextc ? <Text style ={styles.circleTextb}> {item.circleTextd} </Text>: <></>}
+
+        {item.image ? <Image source={item.image} style={styles.image}  />: <></>}
+        {item.text ? <Text style={styles.text}>{item.text}</Text>: <></>}
+
+        {item.description1 ? <Text style={styles.description1}>{item.description1}</Text> : <></>}
+        {item.description1 ? <Text style={styles.description2}>{item.description2}</Text> : <></>}
+        {item.button ?  <AppButton title={item.button} color={"white"}  /> : <></>}
+        </View>
     );
   };
 
   _keyExtractor = (item) => item.title;
 
   render() {
+    const { navigation } = this.props;
     return (
       <View style={{flex: 1}}>
         <StatusBar translucent backgroundColor="transparent" />
@@ -112,4 +188,8 @@ export default class App extends React.Component {
       </View>
     );
   }
+}
+
+export default function({navigation}){
+  return <IntroSlider navigation={navigation} />
 }

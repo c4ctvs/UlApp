@@ -20,12 +20,13 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 15,
-    width: '100%'
+    padding: 20,
+    width:250
+   
   },
   buttonText: {
     color: Colors.black,
-    fontSize: 4,
+    fontSize: 14,
     fontWeight: '600',
    
   }
