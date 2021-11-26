@@ -3,20 +3,22 @@ import { View, StyleSheet, Button, Alert, Text, ScrollView, Dimensions } from 'r
 import useStatusBar from '../hooks/useStatusBar';
 import SafeView from '../components/SafeView';
 import Colors from '../utils/colors';
-
-import { getNamesOfCategories } from '../components/Firebase/firebase';
+import NextBackButton from '../components/NextBackButton';
+import { sendPretest } from '../components/Firebase/firebase';
 import AppButton from '../components/AppButton';
 import RangeSlider, { Slider } from 'react-native-range-slider-expo';
 const { width, height } = Dimensions.get('window');
 
 const doc = [
   {
-    subtitle: 'Cześć! \n\nPrzed rozpoczęciem pracy z aplikacją, zapraszamy Cię do ustosunkowania się do kilku ważnych dla nas stwierdzeń, co pozwoli nam wspólnie określić, czy i na ile nasza wspólna praca jest dla Ciebie wspierająca i monitorować zmiany w Twoim funkcjonowaniu.  ',
+
+    subtitle: ' Przed rozpoczęciem pracy z aplikacją, zapraszamy Cię do ustosunkowania się do kilku ważnych dla nas stwierdzeń, co pozwoli nam wspólnie określić, czy i na ile nasza wspólna praca jest dla Ciebie wspierająca i monitorować zmiany w Twoim funkcjonowaniu.  ',
     subtitle2: ' Po 30 dniach poprosimy Cię o ponowne udzielenie odpowiedzi do tych samych stwierdzeń, a w tak zwanym międzyczasie będziemy podsyłać pojedyncze pytania o Twój stan i nastawienie. ',
     subtitle3:'Zachęcamy do udzielenia odpowiedzi szybko, bez specjalnego zastanawiania się. ',
 
   },
   {
+    greenTitle:'Zaznacz na suwaku',
     summary: 'Mam jasną i precyzyjną umowę pomiędzy mną a innymi domownikami, określającą nasze zadania, odpowiedzialności, co pozwala mi efektywnie dbać o siebie, swoją pracę, i inne zobowiązania w domu i pracy. ',
     slider:'true'
  
@@ -74,12 +76,22 @@ const doc = [
   {
  
     summary:'Mój poziom stresu i napięcia w pracy jest wysoki.  ',
-    slider:'true'
+    slider:'true',
+    send:'true'
   }
 ];
 
 
-export default function PretestScreen() {
+let handleOnSend = async (navigation) =>{
+  sendPretest().then( () => {
+    navigation.navigate('Home')
+  })
+
+ 
+}
+
+
+export default function PretestScreen({navigation}) {
   const [value, setValue] = useState(0);
   return (
     <SafeView style={styles.container}>
@@ -94,7 +106,7 @@ export default function PretestScreen() {
         {
             doc.map((data) => {
             return(
-                <View style={{ width, height }} >
+                <View style={{ width, height ,justifyContent: 'center'}} >
                     {data.weekTitle ? <Text style={styles.weekTitle}>{data.weekTitle}</Text> : <></>}
                     {data.weekSubtitle ? <Text style={styles.weekSubtitle}>{data.weekSubtitle}</Text> : <></>}
                     {data.greenTitle ? data.greenTitle == "ZADANIE" ? <Text style={styles.greenTitle}><MaterialCommunityIcons name="square-edit-outline" color={"#ffffff"} size={50} />  {data.greenTitle}</Text>: <Text style={styles.greenTitle}>{data.greenTitle}</Text> : <></>}
@@ -117,20 +129,20 @@ export default function PretestScreen() {
                     {data.subtitle2 ?<Text style={styles.subtitle}> {data.subtitle2} </Text> : <></>}
                     {data.subtitle3 ?<Text style={styles.subtitle}> {data.subtitle3} </Text> : <></>}
                   
-                   
-                    
-                    {data.summary  ?<Text style={styles.summary}> {data.summary} </Text> : <></>}
-                    {data.send  ?  <NextBackButton title="Wyślij" onPress={() => handleOnSend(data.id, text)}/> : <></>} 
-                   
+                         
                     {data.slider ?  <View style={styles.sliderView}><Slider min={0} max={10} step={1}
                          valueOnChange={value => setValue(value)}
                          initialValue={12}
-                         knobColor='red'
+                         knobColor='#0723ad'
                          valueLabelsBackgroundColor='grey'
                          inRangeBarColor='grey'
-                         outOfRangeBarColor='orange'
+                         outOfRangeBarColor='#219a9c'
                 
                     /></View>:<></>}
+                    
+                    {data.summary  ?<Text style={styles.summary}> {data.summary} </Text> : <></>}
+                    {data.send  ?  <NextBackButton title="Zakończ" onPress={() => handleOnSend(navigation)}/> : <></>} 
+             
              
                 </View>
             )
@@ -145,7 +157,8 @@ export default function PretestScreen() {
 const styles = StyleSheet.create({
   sliderView:{
     marginTop:40,
-    width:250
+    width:'75%',
+    marginHorizontal:"15%"
   },
   container: {
     flex: 1,
@@ -162,6 +175,14 @@ const styles = StyleSheet.create({
   },
   buttons:{
     fontSize:12,
+  }, 
+  greenTitle: { 
+    fontSize: 22,
+    marginBottom:'20%',
+    color: '#369e40',
+    textAlign: 'center',
+    fontFamily:'sans-serif-medium'
+
   },
   subtitle: {
     fontSize: 16,
@@ -178,7 +199,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       marginHorizontal:30,
       fontFamily:'sans-serif-light',
-      marginTop:280,
+      marginTop:50,
   },
 });
 

@@ -9,7 +9,7 @@ import BigSlider from 'react-native-big-slider'
 import NextBackButton from '../components/NextBackButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { sendData } from '../components/Firebase/firebase';
-
+import Dialog from "react-native-dialog";
 
 export default function StartActivity({ route, navigation}) {
 
@@ -17,12 +17,19 @@ const screen = route.params;
 
 const [doc, setDocs] = useState([])
 const { width, height } = Dimensions.get('window');
-const [value_, setValue] = useState()
+const [visibility, setVisibility] = useState()
 const [text, setText] = useState('')
+
+
+const showDialog = (value) => {
+  setVisibility(value)
+};
+
 
 let handleOnSend = async (doc, values) =>{
   console.log("topic" + doc)
   sendData(screen.topic, doc, values).then( () => {
+    setVisibility(false)
     navigation.navigate('Home')
   })
 
@@ -85,7 +92,7 @@ return(
                    
                     {data.subtitle3 ?<Text style={styles.subtitle}> {data.subtitle3} </Text> : <></>}
                     {data.summary  ?<Text style={styles.summary}> {data.summary} </Text> : <></>}
-                    {data.send  ?  <NextBackButton title="Wyślij" onPress={() => handleOnSend(data.id, text)}/> : <></>} 
+                    {data.send  ?  <NextBackButton title="Wyślij" onPress = {() => showDialog(true)}/> : <></>} 
                     {data.button1 ?
                         <View style={styles.parent}>
                             <NextBackButton  title={data.button1} />
@@ -93,7 +100,14 @@ return(
                         </View>: <></>}
                   
                     {data.hint ?<Text style={styles.hint}> {data.hint} </Text> : <></>}
-                
+                    <Dialog.Container visible={visibility}>
+                        <Dialog.Title>Zakończenie zadania</Dialog.Title>
+                        <Dialog.Description>
+                         Czy na pewno chcesz zakończyć zadanie?
+                        </Dialog.Description>
+                        <Dialog.Button label="Powrót" onPress={() => showDialog(false)}/>
+                        <Dialog.Button label="Wyślij"  onPress={() => handleOnSend(data.id, text)}/>
+                  </Dialog.Container>
                 </View>
             )
             })

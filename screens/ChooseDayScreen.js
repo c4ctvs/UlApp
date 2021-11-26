@@ -7,12 +7,15 @@ import { getDays, getTitle, getAvaiability, updateAv } from '../components/Fireb
 
 import ColorsB from '../utils/colors.js'
 
+
 export default function DescriptionScreen({ route, navigation}) {
+    console.log("id"+route.params.id)
     let update = async () => {
-        await updateAv(screen.id)
+        await updateAv(route.params.id)
     }
     
-    update()
+update()
+
 const screen = route.params;
 const [days, setDays] = useState([])
 const [buttonData, getButtonData] = useState([])

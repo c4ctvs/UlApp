@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../screens/HomeScreen';
 import DescriptionScreen from '../screens/DescriptionScreen';
-import FirstTimeLogin from '../screens/FirstTimeLogin';
+import FirstTime from '../screens/FirstTime';
 import ChooseDayScreen from '../screens/ChooseDayScreen';
 import StartActivityScreen from '../screens/StartActivityScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -24,7 +24,7 @@ export default function AppStack() {
       <Stack.Screen name="ChooseDayScreen" component={ChooseDayScreen} />
       <Stack.Screen name="StartActivity" component={StartActivityScreen} /> 
       <Stack.Screen name="Pretest" component={Pretest} />
-      <Stack.Screen name="FirstTime" component={FirstTimeLogin} />
+      <Stack.Screen name="FirstTime" component={FirstTime} />
     </Stack.Navigator>
 
   );

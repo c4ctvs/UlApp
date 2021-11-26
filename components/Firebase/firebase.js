@@ -145,6 +145,14 @@ export const sendData = async(topic, doc, data) =>{
 
 }
 
+export const sendPretest = async(data) =>{
+  let db = firebase.firestore();
+  const user = firebase.auth().currentUser;
+
+  db.collection("userInfo").doc(user.email).set({
+    "firstLogin":false
+  })
+}
 
 export const updateAv = async(doc) =>{
   let db = firebase.firestore();
@@ -156,16 +164,37 @@ export const updateAv = async(doc) =>{
     results.push(doc.data())
  
   })
-  console.log(results)
+  let i=0
   results.map((data) => {
-   
     if(data.time <= firebase.firestore.Timestamp.now() && data.done == false){
-      db.collection("userInfo").doc(user.email).collection("tasks").doc(JSON.stringify(doc)).collection("days").doc(data.id).update({
+      db.collection("userInfo").doc(user.email).collection("tasks").doc(JSON.stringify(doc)).collection("days").doc(JSON.stringify(i)).update({
         "avaiable": true
       })
+  
+    }
+    i=i+1
+  })
+}
+
+export const firstLoginToday = async () =>{
+  let db = firebase.firestore();
+  const user = firebase.auth().currentUser;
+  let results = []
+  for(let i=0; i<5; i++){
+  let values = await db.collection("userInfo").doc(user.email).collection("tasks").doc(JSON.stringify(i)).collection("days").get()
+
+  values.forEach((doc) => {
+    results.push(doc.data())
+  })
+  results.map((data) => {
+    if(data.time <= firebase.firestore.Timestamp.now() && data.done == true && data.firstLoginToday == true){
+        return true
     }
   })
 }
+  return false
+}
+
 export const getNamesOfCategories = async () => {
   let db = firebase.firestore();
   let result = []

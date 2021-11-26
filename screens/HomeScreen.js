@@ -3,7 +3,7 @@ import { View, StyleSheet, Button, Alert, Text } from 'react-native';
 import useStatusBar from '../hooks/useStatusBar';
 import SafeView from '../components/SafeView';
 import Colors from '../utils/colors';
-import { logout, firstLogin } from '../components/Firebase/firebase';
+import { logout, firstLogin, firstLoginToday } from '../components/Firebase/firebase';
 import { getNamesOfCategories } from '../components/Firebase/firebase';
 import AppButton from '../components/AppButton';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -25,7 +25,24 @@ export default function HomeScreen({navigation}) {
     }
     check()
     if(checkFirstLogin == true){
-      navigation.navigate("Pretest")
+      navigation.navigate("FirstTime")
+    }
+  })
+
+
+  const [checkFirstLoginToday, setLT] = useState()
+  useEffect(() =>{
+    let lt
+    let checkA = async () => {
+      lt = await firstLoginToday()
+      setLT(lt)
+    }
+    checkA()
+    if(checkFirstLoginToday == true){
+      console.log("first login today")
+    }
+    else{
+      console.log("you already logged today")
     }
   })
 
