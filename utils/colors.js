@@ -7,5 +7,5 @@ export default {
   lightGrey: '#f9f9f9',
   mediumGrey: '#d4d4d4',
   red: '#fc5c65',
-  background:'#40549c'
+  background:'#003159'
 };

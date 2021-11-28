@@ -19,7 +19,9 @@ const data = [
       bg: Colors.background,
     },
     {
-      secondtitle: 'Przez najbliższych 30 dni \n będziesz otrzymywać wiadomości',
+      title: 'Przez najbliższych',
+      greenTitle:'30 dni',
+      secondtitle:' będziesz otrzymywać wiadomości\n\n',
       secondsubtitle: ' które dostarczą Ci użytecznych metod i pomysłów, co robić, aby jeszcze lepiej układać relacje między pracą a domem w rzeczywistości zdalnej i bardziej zadbać o siebie i swoją rodzinę. ',
       bg: Colors.background,
     },
@@ -59,29 +61,30 @@ return(
             data.map((item) => {
             return(
                 <View style={{ width, height, justifyContent: 'center',flex: 1 }} >
-                {item.tile ?  <Text style={styles.title}>{item.title}</Text> : <></>}
-        {item.secondtitle ? <Text style={styles.secondtitle}>{item.secondtitle}</Text> : <></>}
-        {item.subtitle ? <Text style ={styles.subtitle}> {item.subtitle} </Text>: <></>}
-        {item.secondsubtitle ? <Text style ={styles.secondsubtitle}> {item.secondsubtitle} </Text>: <></>}
-        
-        {item.circleTextTitlea ? <Text style ={styles.circleTitlea}> {item.circleTextTitlea} </Text>: <></>}
-        {item.circleTexta ? <Text style ={styles.circleTexta}> {item.circleTexta} </Text>: <></>}
+                {item.title ?  <Text style={styles.title}>{item.title}</Text> : <></>}
+                {item.greenTitle? <Text style={styles.greenTitle}>{item.greenTitle}</Text> : <></>}
+                {item.secondtitle ? <Text style={styles.secondtitle}>{item.secondtitle}</Text> : <></>}
+                {item.subtitle ? <Text style ={styles.subtitle}> {item.subtitle} </Text>: <></>}
+                {item.secondsubtitle ? <Text style ={styles.secondsubtitle}> {item.secondsubtitle} </Text>: <></>}
+                
+                {item.circleTextTitlea ? <Text style ={styles.circleTitlea}> {item.circleTextTitlea} </Text>: <></>}
+                {item.circleTexta ? <Text style ={styles.circleTexta}> {item.circleTexta} </Text>: <></>}
 
-        {item.circleTextTitlea ? <Text style ={styles.circleTitleb}> {item.circleTextTitleb} </Text>: <></>}
-        {item.circleTextb ? <Text style ={styles.circleTextb}> {item.circleTextb} </Text>: <></>}
+                {item.circleTextTitlea ? <Text style ={styles.circleTitleb}> {item.circleTextTitleb} </Text>: <></>}
+                {item.circleTextb ? <Text style ={styles.circleTextb}> {item.circleTextb} </Text>: <></>}
 
-        {item.circleTextTitlea ? <Text style ={styles.circleTitlea}> {item.circleTextTitlec} </Text>: <></>}
-        {item.circleTextc ? <Text style ={styles.circleTexta}> {item.circleTextc} </Text>: <></>}
+                {item.circleTextTitlea ? <Text style ={styles.circleTitlea}> {item.circleTextTitlec} </Text>: <></>}
+                {item.circleTextc ? <Text style ={styles.circleTexta}> {item.circleTextc} </Text>: <></>}
 
-        {item.circleTextTitlea ? <Text style ={styles.circleTitleb}> {item.circleTextTitled} </Text>: <></>}
-        {item.circleTextc ? <Text style ={styles.circleTextb}> {item.circleTextd} </Text>: <></>}
+                {item.circleTextTitlea ? <Text style ={styles.circleTitleb}> {item.circleTextTitled} </Text>: <></>}
+                {item.circleTextc ? <Text style ={styles.circleTextb}> {item.circleTextd} </Text>: <></>}
 
-        {item.image ? <Image source={item.image} style={styles.image}  />: <></>}
-        {item.text ? <Text style={styles.text}>{item.text}</Text>: <></>}
+                {item.image ? <Image source={item.image} style={styles.image}  />: <></>}
+                {item.text ? <Text style={styles.text}>{item.text}</Text>: <></>}
 
-        {item.description1 ? <Text style={styles.description1}>{item.description1}</Text> : <></>}
-        {item.description1 ? <Text style={styles.description2}>{item.description2}</Text> : <></>}
-        {item.button ?  <AppButton title={item.button} color={"white"}  onPress={()=>navigation.navigate("Pretest")}/> : <></>}
+                {item.description1 ? <Text style={styles.description1}>{item.description1}</Text> : <></>}
+                {item.description1 ? <Text style={styles.description2}>{item.description2}</Text> : <></>}
+                {item.button ?  <AppButton title={item.button} color={"white"}  onPress={()=>navigation.navigate("Pretest")}/> : <></>}
                   
                 </View>
             )
@@ -114,6 +117,12 @@ const styles = StyleSheet.create({
     title: {
       fontSize: 22,
       color: 'white',
+      textAlign: 'center',
+  
+    },
+    greenTitle: {
+      fontSize: 40,
+      color: 'green',
       textAlign: 'center',
   
     },

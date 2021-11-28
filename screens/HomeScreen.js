@@ -30,22 +30,6 @@ export default function HomeScreen({navigation}) {
   })
 
 
-  const [checkFirstLoginToday, setLT] = useState()
-  useEffect(() =>{
-    let lt
-    let checkA = async () => {
-      lt = await firstLoginToday()
-      setLT(lt)
-    }
-    checkA()
-    if(checkFirstLoginToday == true){
-      console.log("first login today")
-    }
-    else{
-      console.log("you already logged today")
-    }
-  })
-
   useEffect(() => {
     const getData = async () => {
       let new_data = await getNamesOfCategories()

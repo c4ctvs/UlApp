@@ -5,7 +5,7 @@ import { textDecorationColor } from 'react-native/Libraries/Components/View/Reac
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { getTask } from '../components/Firebase/firebase';
 import ColorsB from '../utils/colors.js'
-import BigSlider from 'react-native-big-slider'
+import RangeSlider, { Slider } from 'react-native-range-slider-expo';
 import NextBackButton from '../components/NextBackButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { sendData } from '../components/Firebase/firebase';
@@ -19,13 +19,24 @@ const [doc, setDocs] = useState([])
 const { width, height } = Dimensions.get('window');
 const [visibility, setVisibility] = useState()
 const [text, setText] = useState('')
-
-
+const [name, setName] = useState('emoticon-cool-outline')
+const [value, setValue] = useState(0);
 const showDialog = (value) => {
   setVisibility(value)
 };
 
-
+useEffect(() => {
+  if(value <2)
+    setName('emoticon-cool-outline')
+  else if(value >=2 && value < 4)
+    setName('emoticon-happy-outline')
+  else if(value >=4 && value < 6)
+    setName('emoticon-neutral-outline')
+  else if(value >=6 && value < 8)
+    setName('emoticon-confused-outline')
+  else
+    setName('emoticon-angry-outline')
+})
 let handleOnSend = async (doc, values) =>{
   console.log("topic" + doc)
   sendData(screen.topic, doc, values).then( () => {
@@ -35,6 +46,7 @@ let handleOnSend = async (doc, values) =>{
 
  
 }
+
 
 console.log("id: " + JSON.stringify(route))
 useEffect(() => {
@@ -81,21 +93,22 @@ return(
                                    
                     {data.subtitle2 ?<Text style={styles.subtitle}> {data.subtitle2} </Text> : <></>}
                 
-                    {data.slider ? <BigSlider
-                                        horizontal
-                                        maximumValue={240}
-                             
-                                        style={{ backgroundColor: 'rgba(0,0,0,.7)', width: 40, marginBottom:160, marginTop:40, marginHorizontal:40, position:'absolute', top:height/4, height:200 }}
-                                        trackStyle={{ backgroundColor: 'rgba(143, 255, 160, .7)' }}
-                                        label=" "
-                                        minimumValue={0} /> : <></>}
+                    {data.slider ?   <View style={styles.sliderView}><Slider min={0} max={10} step={1}
+                         valueOnChange={value => setValue(value)}
+                         initialValue={12}
+                         knobColor='#369e40'
+                         valueLabelsBackgroundColor='grey'
+                         inRangeBarColor='grey'
+                         outOfRangeBarColor='#369e40'
+                
+                    /><Text style={{textAlign:'center'}}><MaterialCommunityIcons name={name} size={40} color={"#ffffff"}/></Text></View> : <></>}
                    
                     {data.subtitle3 ?<Text style={styles.subtitle}> {data.subtitle3} </Text> : <></>}
                     {data.summary  ?<Text style={styles.summary}> {data.summary} </Text> : <></>}
-                    {data.send  ?  <NextBackButton title="Wyślij" onPress = {() => showDialog(true)}/> : <></>} 
+                    {data.send  ?  <View style={{width:"50%", left:'25%'}}><NextBackButton title="Wyślij" onPress = {() => showDialog(true)}/></View> : <></>} 
                     {data.button1 ?
                         <View style={styles.parent}>
-                            <NextBackButton  title={data.button1} />
+                            <NextBackButton  title={data.button1} onPress={() => navigation.navigate("Wyzwalacz")} />
                             <NextBackButton title={data.button2} /> 
                         </View>: <></>}
                   
@@ -123,6 +136,11 @@ const styles = StyleSheet.create({
     justifyContent:'space-between',
     margin:30,
     marginTop:50
+  },
+  sliderView:{
+    marginTop:40,
+    width:'75%',
+    marginHorizontal:"15%"
   },
   buttons:{
     position:'absolute',
@@ -211,7 +229,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginHorizontal:30,
         fontFamily:'sans-serif-light',
-        marginTop:280,
+        marginTop:100,
          
       },
       hint: {

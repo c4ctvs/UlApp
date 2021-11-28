@@ -54,7 +54,7 @@ export default function RegisterScreen({ navigation }) {
           textContentType="name"
         />
         </View>
-        <FormButton title={'Sprawdź'} />
+        <View style={{width:"90%", left:'5%'}}><FormButton title={'Sprawdź'} color="white"/></View>
 
       </Form>
       <IconButton
@@ -73,7 +73,6 @@ export default function RegisterScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    
     backgroundColor: Colors.background
     
   },
@@ -86,13 +85,16 @@ const styles = StyleSheet.create({
     marginVertical: 10
   },
   logo: {
-    justifyContent:'space-evenly',
-    marginTop:120,
+
+    marginTop:160,
     width: 400,
-    height: 400
+    height: 400,
+    opacity:0.5,
+    position:'absolute'
   },
   
   field:{
+    marginTop:30,
     marginHorizontal:20
   }
 

@@ -11,70 +11,71 @@ const { width, height } = Dimensions.get('window');
 
 const doc = [
   {
-
+    greenTitle:"PRETEST",
     subtitle: ' Przed rozpoczęciem pracy z aplikacją, zapraszamy Cię do ustosunkowania się do kilku ważnych dla nas stwierdzeń, co pozwoli nam wspólnie określić, czy i na ile nasza wspólna praca jest dla Ciebie wspierająca i monitorować zmiany w Twoim funkcjonowaniu.  ',
     subtitle2: ' Po 30 dniach poprosimy Cię o ponowne udzielenie odpowiedzi do tych samych stwierdzeń, a w tak zwanym międzyczasie będziemy podsyłać pojedyncze pytania o Twój stan i nastawienie. ',
     subtitle3:'Zachęcamy do udzielenia odpowiedzi szybko, bez specjalnego zastanawiania się. ',
 
   },
   {
-    greenTitle:'Zaznacz na suwaku',
+    greenText:"Pytanie 1 z 12",
     summary: 'Mam jasną i precyzyjną umowę pomiędzy mną a innymi domownikami, określającą nasze zadania, odpowiedzialności, co pozwala mi efektywnie dbać o siebie, swoją pracę, i inne zobowiązania w domu i pracy. ',
     slider:'true'
  
   },
   {
+    greenText:"Pytanie 2 z 12",
     summary:'Mam jasną i precyzyjną umowę pomiędzy mną a moimi współpracownikami, określającą nasze zadania, odpowiedzialności, co pozwala mi efektywnie dbać o siebie, swoją prace, i inne zobowiązania w domu i w pracy. ',
     slider:'true'
   },
   {
-
+    greenText:"Pytanie 3 z 12",
     summary:'Moje cechy i kompetencje pozwalają mi efektywnie wywiązywać się z różnych zadań w życiu osobistym. ',
     slider:'true'
   },
   {
- 
+    greenText:"Pytanie 4 z 12",
     summary:'Moje cechy i kompetencje pozwalają mi efektywnie wywiązywać się z różnych zadań w życiu zawodowym. ',
     slider:'true'
   },
   {
- 
+    greenText:"Pytanie 5 z 12",
     summary:'Dobrze radzę sobie w sytuacjach trudnych (w tym trudnych rozmowach) z innymi domownikami. ',
     slider:'true'
   },
   {
- 
+    greenText:"Pytanie 6 z 12",
     summary:'Dobrze radzę sobie w sytuacjach trudnych (w tym trudnych rozmowach) z moimi współpracownikami. ',
     slider:'true'
   },
   {
- 
+    greenText:"Pytanie 7 z 12",
     summary:'Potrafię efektywnie regulować swoje trudne emocje w domu. ',
     slider:'true'
   },
   {
- 
+    greenText:"Pytanie 8 z 12",
     summary:'Potrafię efektywnie regulować swoje trudne emocje w pracy. ',
     slider:'true'
   },
   {
- 
+    greenText:"Pytanie 9 z 12",
     summary:'Potrafię odpowiednio reagować na trudne emocje innych domowników. ',
     slider:'true'
   },
   {
- 
+    greenText:"Pytanie 10 z 12",
     summary:'Potrafię odpowiednio reagować na trudne emocje moich współpracowników. ',
     slider:'true'
   },
   {
- 
+    greenText:"Pytanie 11 z 12",
     summary:'Mój poziom stresu i napięcia w domu jest wysoki. ',
     slider:'true'
   }
   ,
   {
- 
+    greenText:"Pytanie 12 z 12",
     summary:'Mój poziom stresu i napięcia w pracy jest wysoki.  ',
     slider:'true',
     send:'true'
@@ -109,7 +110,8 @@ export default function PretestScreen({navigation}) {
                 <View style={{ width, height ,justifyContent: 'center'}} >
                     {data.weekTitle ? <Text style={styles.weekTitle}>{data.weekTitle}</Text> : <></>}
                     {data.weekSubtitle ? <Text style={styles.weekSubtitle}>{data.weekSubtitle}</Text> : <></>}
-                    {data.greenTitle ? data.greenTitle == "ZADANIE" ? <Text style={styles.greenTitle}><MaterialCommunityIcons name="square-edit-outline" color={"#ffffff"} size={50} />  {data.greenTitle}</Text>: <Text style={styles.greenTitle}>{data.greenTitle}</Text> : <></>}
+                    {data.greenText ? <Text style={styles.greenText}>{data.greenText}</Text> : <></>}
+                    {data.greenTitle ? <Text style={styles.greenTitle}>{data.greenTitle}</Text> : <></>}
                     
                     {data.textInput ?   <TextInput
                                         multiline
@@ -133,15 +135,15 @@ export default function PretestScreen({navigation}) {
                     {data.slider ?  <View style={styles.sliderView}><Slider min={0} max={10} step={1}
                          valueOnChange={value => setValue(value)}
                          initialValue={12}
-                         knobColor='#0723ad'
+                         knobColor='#369e40'
                          valueLabelsBackgroundColor='grey'
                          inRangeBarColor='grey'
-                         outOfRangeBarColor='#219a9c'
+                         outOfRangeBarColor='#369e40'
                 
                     /></View>:<></>}
                     
                     {data.summary  ?<Text style={styles.summary}> {data.summary} </Text> : <></>}
-                    {data.send  ?  <NextBackButton title="Zakończ" onPress={() => handleOnSend(navigation)}/> : <></>} 
+                    {data.send  ? <View style={{position:'absolute', bottom:'25%',width:'50%', left:'25%'}}><NextBackButton title="Zakończ" onPress={() => handleOnSend(navigation)}/></View> : <></>} 
              
              
                 </View>
@@ -178,11 +180,20 @@ const styles = StyleSheet.create({
   }, 
   greenTitle: { 
     fontSize: 22,
-    marginBottom:'20%',
+    marginBottom:'10%',
     color: '#369e40',
     textAlign: 'center',
     fontFamily:'sans-serif-medium'
 
+  },
+  greenText: { 
+    position:'absolute',
+    top:'5%',
+    fontSize: 20,
+    color: '#369e40',
+    textAlign:'right',
+    margin:'5%',
+    fontFamily:'sans-serif-medium'
   },
   subtitle: {
     fontSize: 16,

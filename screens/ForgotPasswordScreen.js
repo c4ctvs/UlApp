@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import * as Yup from 'yup';
 
 import Colors from '../utils/colors';
@@ -37,6 +37,7 @@ export default function ForgotPasswordScreen({ navigation }) {
 
   return (
     <SafeView style={styles.container}>
+          <Image source={require('../assets/logo2.png')} style={styles.logo} />
       <Form
         initialValues={{ email: '' }}
         validationSchema={validationSchema}
@@ -51,7 +52,7 @@ export default function ForgotPasswordScreen({ navigation }) {
           textContentType="emailAddress"
           autoFocus={true}
         />
-        <FormButton title="Forgot Password" />
+        <FormButton title="Wyślij link resetujący" color="white"/>
         {<FormErrorMessage error={customError} visible={true} />}
       </Form>
       <IconButton
@@ -74,5 +75,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 10
-  }
+  },
+  logo: {
+
+    marginTop:160,
+    width: 400,
+    height: 400,
+    opacity:0.5,
+    position:'absolute'
+  },
+  
 });

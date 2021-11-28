@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, Image } from 'react-native';
 import * as Yup from 'yup';
 
 import Colors from '../utils/colors';
@@ -16,10 +16,10 @@ import useStatusBar from '../hooks/useStatusBar';
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required('Wprowadź adres email')
-    .email()
+    .email('Wprowadź prawidłowy adres email')
     .label('Email'),
   password: Yup.string()
-    .required()
+    .required('Wprowadź hasło')
     .min(6, 'Hasło musi mieć conajmniej 6 znaków')
     .label('Password')
 });
@@ -53,6 +53,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <SafeView style={styles.container}>
+          <Image source={require('../assets/logo2.png')} style={styles.logo} />
        <IconButton
         style={styles.backButton}
         iconName="keyboard-backspace"
@@ -86,7 +87,7 @@ export default function LoginScreen({ navigation }) {
           rightIcon={rightIcon}
           handlePasswordVisibility={handlePasswordVisibility}
         />
-        <FormButton title={'Zaloguj'} color={Colors.white} />
+        <FormButton title={'Zaloguj'} color={'white'} />
         {<FormErrorMessage error={loginError} visible={true} />}
       </Form>
       <View style={styles.footerButtonContainer}>
@@ -110,12 +111,21 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   forgotPasswordButtonText: {
-    color: Colors.black,
+    color: Colors.white,
     fontSize: 18,
     fontWeight: '600'
   },
   backButton: {
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
+  
+  logo: {
+    padding:0,
+    marginTop:160,
+    width: 400,
+    height: 400,
+    opacity:0.5,
+    position:'absolute'
+  },
 });

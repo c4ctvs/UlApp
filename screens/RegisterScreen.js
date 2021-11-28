@@ -72,6 +72,7 @@ export default function RegisterScreen({ navigation }) {
    
     <SafeView style={styles.container}>
            <Image source={require('../assets/logo2.png')} style={styles.logo} />
+      <View style={{width:'90%', left:'5%', marginTop:30}}>
       <Form
         initialValues={{
           email: '',
@@ -115,9 +116,11 @@ export default function RegisterScreen({ navigation }) {
           handlePasswordVisibility={handleConfirmPasswordVisibility}
       
         />
-        <FormButton title={'Register'} visible={!modalVisible}/>
+        <FormButton title={'Zarejestruj'} color="white"/>
         {<FormErrorMessage error={registerError} visible={true} />}
       </Form>
+
+      </View>
       <IconButton
         style={styles.backButton}
         iconName="keyboard-backspace"
@@ -147,11 +150,12 @@ const styles = StyleSheet.create({
     marginVertical: 10
   },
   logo: {
-    justifyContent:'space-evenly',
-    marginTop:30,
+
+    marginTop:160,
     width: 400,
-    height: 400
+    height: 400,
+    opacity:0.5,
+    position:'absolute'
   },
   
-
 });

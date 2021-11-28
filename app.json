@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/logo2.png",
     
-      "backgroundColor": "#40549c"
+      "backgroundColor": "#003159"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

@@ -26,6 +26,7 @@
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-big-slider": "^0.1.1",
     "react-native-dialog": "^9.2.0",
+    "react-native-draggable": "^3.3.0",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-hide-with-keyboard": "1.2.1",
     "react-native-range-slider-expo": "^1.4.1",

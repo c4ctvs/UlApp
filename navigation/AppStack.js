@@ -6,11 +6,8 @@ import DescriptionScreen from '../screens/DescriptionScreen';
 import FirstTime from '../screens/FirstTime';
 import ChooseDayScreen from '../screens/ChooseDayScreen';
 import StartActivityScreen from '../screens/StartActivityScreen';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import WyzwalaczScreen from '../screens/WyzwalaczScreen';
 import Pretest from '../screens/PretestScreen'
-
-const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator();
 
@@ -23,6 +20,7 @@ export default function AppStack() {
       <Stack.Screen name="Description" component={DescriptionScreen} />
       <Stack.Screen name="ChooseDayScreen" component={ChooseDayScreen} />
       <Stack.Screen name="StartActivity" component={StartActivityScreen} /> 
+      <Stack.Screen name="Wyzwalacz" component={WyzwalaczScreen} />
       <Stack.Screen name="Pretest" component={Pretest} />
       <Stack.Screen name="FirstTime" component={FirstTime} />
     </Stack.Navigator>
