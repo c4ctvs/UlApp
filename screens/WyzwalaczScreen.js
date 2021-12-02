@@ -39,8 +39,9 @@ const { width, height } = Dimensions.get('window');
 return (
     <View style={styles.container}>
     <View style={{ width, height}}>
-   
-        <Text style={styles.greenTitle1}>Osobiste</Text>
+    <Text style={styles.greenTitle}> Wyzwalacze </Text>
+    <Text>Dodaj </Text>
+       <Text style={styles.greenTitle1}>Osobiste</Text>
        <Text style={{ borderBottomColor: '#3d7849',
                                    borderBottomWidth: 6,
                                    justifyContent:'center',
@@ -54,6 +55,8 @@ return (
     <DialogInput isDialogVisible={visibility}
             title={"Nowy wyzwalacz"}
             hintInput ={"Nazwa"}
+            cancelText={"Powrót"}
+            submitText={"Dodaj"}
             submitInput={ (inputText) => {addElement(inputText),showDialog(false)} }
             closeDialog={ () => {showDialog(false)}}>
     </DialogInput>
@@ -100,9 +103,19 @@ const styles = StyleSheet.create({
       },
       greenTitle1: {
         position:'absolute',
-        top: '5%',
-        fontSize: 30,
+        top: '27%',
+        left:'5%',
+        fontSize: 20,
         marginBottom:40,
+        color: '#369e40',
+        textAlign: 'center',
+        fontFamily:'sans-serif-medium'
+    
+      },
+      greenTitle: {
+        marginTop:'14%',
+        fontSize: 30,
+
         color: '#369e40',
         textAlign: 'center',
         fontFamily:'sans-serif-medium'
@@ -110,8 +123,9 @@ const styles = StyleSheet.create({
       },
       greenTitle2: {
         position:'absolute',
-        top: '52%',
-        fontSize: 30,
+        top: '62%',
+        left:'5%',
+        fontSize: 20,
         marginBottom:40,
         color: '#369e40',
         textAlign: 'center',

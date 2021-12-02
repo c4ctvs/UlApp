@@ -11,7 +11,7 @@ export default function AddButton({onPress}) {
       onPress={onPress}
 
     >
-      <Text style={styles.text}><MaterialCommunityIcons name="plus" size={40}/></Text>
+      <Text style={styles.text}><MaterialCommunityIcons name="plus" size={25}/></Text>
     </TouchableOpacity>
     )
 }
@@ -19,9 +19,11 @@ export default function AddButton({onPress}) {
 const styles = StyleSheet.create({
   button: {
     borderRadius: 100,  
-    padding:20,
+    padding:15,
     color:'black',  
-    alignSelf: 'flex-start'
+    position:'absolute',
+    left:'43.5%',
+    bottom:'5%'
   },
   text:{
     fontSize:40,

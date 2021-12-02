@@ -3,13 +3,19 @@ import { View, SafeAreaView, StyleSheet, Button, Alert, Text, Dimensions } from 
 import { ScrollView } from 'react-native-gesture-handler';
 import { textDecorationColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { getDescription } from '../components/Firebase/firebase';
+import { getDescription, updateAv  } from '../components/Firebase/firebase';
 import ColorsB from '../utils/colors.js'
 import NextBackButton from '../components/NextBackButton'
 
 export default function DescriptionScreen({ route, navigation}) {
 
 const screen = route.params;
+
+let update = async () => {
+  await updateAv(route.params.id)
+}
+
+update()
 
 const [doc, setDocs] = useState([])
 const { width, height } = Dimensions.get('window');
@@ -40,7 +46,7 @@ return(
                     {data.subtitle ? <Text style={styles.subtitle}> {data.subtitle} </Text> : <></>}
                     {data.subtitle2 ?<Text style={styles.subtitle}> {data.subtitle2} </Text> :<></>}
                     
-                    {data.greenField ?<Text style={{opacity: data.greenField,
+                    {data.greenField ?<Text style={{
                                   color: '#3d7849',
                                   fontFamily:'sans-serif-medium',
                                   fontSize: 22,
@@ -54,9 +60,7 @@ return(
 
                    {data.line ? <Text style={{ borderBottomColor: '#3d7849',
                                    borderBottomWidth: 6,
-                                   opacity:data.line,
-    
-                                   
+                              
                                    }}></Text> : <></>}
                       <View style={styles.buttonsContainer}>
                      

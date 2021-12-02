@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, SafeAreaView, StyleSheet, Button, Alert, Text, Dimensions, TextInput } from 'react-native';
+import { View, SafeAreaView, StyleSheet, Button, Alert, Text, Dimensions, TextInput, FlatList } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { textDecorationColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
@@ -82,7 +82,9 @@ return(
                                         placeholder={"Wpisz notatkę"}
                                         onChangeText={text => setText(text)}
                                       /> : <></>}
-                                      
+                    {data.icon ? <Text style={{textAlign:'center', marginTop:40}}><MaterialCommunityIcons name={data.icon} size={100} color={"#369e40"}/></Text> : <></>}                  
+                    {data.greenSubtitle ? <Text style={styles.greenSubtitle}> {data.greenSubtitle} </Text> : <></>}
+                    {data.greenSubtitleIt ? <Text style={styles.greenSubtitleIt}> {data.greenSubtitleIt} </Text> : <></>}
                     {data.subtitle ? <Text style={styles.subtitle}> {data.subtitle} </Text> : <></>}
                     {data.line  ?<Text style={{ borderBottomColor: '#3d7849',
                                    borderBottomWidth: 6,
@@ -90,7 +92,10 @@ return(
                         
                                    
                                    }}></Text> : <></>}
-                                   
+                    {data.list2 ?  <FlatList
+                          data={data.list2}
+                          renderItem={({item}) => <Text style={styles.list}>{item}</Text>}
+                        /> :<></>}         
                     {data.subtitle2 ?<Text style={styles.subtitle}> {data.subtitle2} </Text> : <></>}
                 
                     {data.slider ?   <View style={styles.sliderView}><Slider min={0} max={10} step={1}
@@ -102,14 +107,20 @@ return(
                          outOfRangeBarColor='#369e40'
                 
                     /><Text style={{textAlign:'center'}}><MaterialCommunityIcons name={name} size={40} color={"#ffffff"}/></Text></View> : <></>}
-                   
+                     {data.list ?  <FlatList
+                    
+                                    data={data.list}
+                                    renderItem={({item}) => <Text style={styles.list}>{item}</Text>}
+                                  /> :<></>}
                     {data.subtitle3 ?<Text style={styles.subtitle}> {data.subtitle3} </Text> : <></>}
+                  
+                    {data.subtitleIt ?<Text style={styles.subtitleIt}> {data.subtitleIt} </Text> : <></>}
                     {data.summary  ?<Text style={styles.summary}> {data.summary} </Text> : <></>}
+                    
                     {data.send  ?  <View style={{width:"50%", left:'25%'}}><NextBackButton title="Wyślij" onPress = {() => showDialog(true)}/></View> : <></>} 
                     {data.button1 ?
                         <View style={styles.parent}>
                             <NextBackButton  title={data.button1} onPress={() => navigation.navigate("Wyzwalacz")} />
-                            <NextBackButton title={data.button2} /> 
                         </View>: <></>}
                   
                     {data.hint ?<Text style={styles.hint}> {data.hint} </Text> : <></>}
@@ -133,7 +144,7 @@ return(
 const styles = StyleSheet.create({
   parent:{
     flexDirection:'row',
-    justifyContent:'space-between',
+    justifyContent:'center',
     margin:30,
     marginTop:50
   },
@@ -161,6 +172,14 @@ const styles = StyleSheet.create({
     wyzwalaczbuttons:{
       width:'30%',
 
+  },
+  list:{
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'left',
+    marginHorizontal:10,
+    fontFamily:'sans-serif-light',
+    padding:5,
   },
     image: {
       width: 320,
@@ -196,7 +215,7 @@ const styles = StyleSheet.create({
      
       top: 40,
       left: 20,
-      fontSize: 20,
+      fontSize: 22,
       marginBottom:40,
       color: '#369e40',
       textAlign: 'left',
@@ -204,15 +223,14 @@ const styles = StyleSheet.create({
   
     },
    greenTitle: {
-     
       top: 40,
-
       fontSize: 30,
       marginBottom:40,
       color: '#369e40',
       textAlign: 'center',
-      fontFamily:'sans-serif-medium'
-  
+      fontFamily:'sans-serif-medium',
+      
+ 
     },
     subtitle: {
       fontSize: 16,
@@ -220,7 +238,36 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       marginHorizontal:10,
       fontFamily:'sans-serif-light',
-      padding:30
+      padding:30,
+
+    },
+    subtitleIt: {
+      fontSize: 16,
+      color: 'white',
+      textAlign: 'center',
+      marginHorizontal:10,
+      fontFamily:'sans-serif-light',
+      padding:30,
+      fontStyle:'italic'
+    },
+    greenSubtitle: {
+      fontSize: 16,
+      color: '#369e40',
+      textAlign: 'center',
+      marginVertical:40,
+      fontFamily:'sans-serif-medium',
+      padding:30,
+      backgroundColor: '#c2c2c2',
+  
+    },
+    greenSubtitleIt: {
+      fontSize: 16,
+      color: '#369e40',
+      textAlign: 'center',
+      marginVertical:40,
+      fontFamily:'sans-serif-medium',
+      padding:30,
+      fontStyle:'italic'
   
     },
     summary: {
