@@ -1,11 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, Alert } from 'react-native';
+import { View, StyleSheet, Text, Image, Alert, Dimensions } from 'react-native';
 
 import AppButton from '../components/AppButton';
 import Colors from '../utils/colors';
 import useStatusBar from '../hooks/useStatusBar';
 import { checkIfUserIsLoggedIn } from '../components/Firebase/firebase';
 import { getNamesOfCategories } from '../components/Firebase/firebase';
+
+
+const win = Dimensions.get('window');
+
+
 export default function WelcomeScreen({ navigation }) {
   
   checkIfUserIsLoggedIn()
@@ -48,11 +53,14 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   logo: {
-    justifyContent:'space-evenly',
-    marginTop:120,
-    width: 400,
-    height: 400
+    padding:0,
+    marginTop:110,
+    alignSelf:'center',
+    position:'absolute',
+    width: win.width,
+    height: win.height/2,
   },
+  
   subtitle: {
     fontSize: 24,
     fontWeight: '600',

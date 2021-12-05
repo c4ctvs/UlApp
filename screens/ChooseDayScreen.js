@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { textDecorationColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { getDays, getTitle, getAvaiability, updateAv } from '../components/Firebase/firebase';
-
+import Spinner from '../components/Spinner';
 import ColorsB from '../utils/colors.js'
 
 
@@ -19,13 +19,14 @@ update()
 const screen = route.params;
 const [days, setDays] = useState([])
 const [buttonData, getButtonData] = useState([])
-
+const [isLoading, setIsLoading] = useState(true)
 
 
 
 useEffect(() => {
     const get = async () => {
         let data = await getAvaiability(screen.id)
+        setIsLoading(false)
         getButtonData(data)
     }
     get()
@@ -44,6 +45,10 @@ useEffect(() => {
 
 
 let i=0
+
+if (isLoading) {
+    return <Spinner />;
+  }
 
 return(
 

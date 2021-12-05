@@ -6,7 +6,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { getDescription, updateAv  } from '../components/Firebase/firebase';
 import ColorsB from '../utils/colors.js'
 import NextBackButton from '../components/NextBackButton'
-
+import Spinner from '../components/Spinner';
 export default function DescriptionScreen({ route, navigation}) {
 
 const screen = route.params;
@@ -16,17 +16,22 @@ let update = async () => {
 }
 
 update()
-
+const [isLoading, setIsLoading] = useState(true);
 const [doc, setDocs] = useState([])
 const { width, height } = Dimensions.get('window');
 const scrollRef = useRef();
 useEffect(() => {
     const getDocs = async () => {
         let newDoc = await getDescription(JSON.stringify(screen.id))
+        setIsLoading(false)
         setDocs(newDoc)
     }
     getDocs()
 }, [])
+
+if (isLoading) {
+  return <Spinner />;
+}
 
 
 
@@ -51,6 +56,7 @@ return(
                                   fontFamily:'sans-serif-medium',
                                   fontSize: 22,
                                   textAlign:'center',
+                                  textTransform:'uppercase',
                                   backgroundColor: '#c2c2c2',
                    
                                   padding: 15}}> {data.greenText} </Text> :<></>}

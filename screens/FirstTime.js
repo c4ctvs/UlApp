@@ -67,24 +67,24 @@ return(
                 {item.subtitle ? <Text style ={styles.subtitle}> {item.subtitle} </Text>: <></>}
                 {item.secondsubtitle ? <Text style ={styles.secondsubtitle}> {item.secondsubtitle} </Text>: <></>}
                 
-                {item.circleTextTitlea ? <Text style ={styles.circleTitlea}> {item.circleTextTitlea} </Text>: <></>}
-                {item.circleTexta ? <Text style ={styles.circleTexta}> {item.circleTexta} </Text>: <></>}
+           
+                {item.circleTexta ?<View style={{marginHorizontal:10,alignSelf:'flex-start', padding:8, marginVertical:5,backgroundColor:'#133f63', borderRadius:100, width:'75%'}}><Text style ={styles.circleTitlea}> {item.circleTextTitlea} </Text><Text style ={styles.circleTexta}> {item.circleTexta}</Text></View>: <></>}
 
-                {item.circleTextTitlea ? <Text style ={styles.circleTitleb}> {item.circleTextTitleb} </Text>: <></>}
-                {item.circleTextb ? <Text style ={styles.circleTextb}> {item.circleTextb} </Text>: <></>}
+          
+                {item.circleTextb ?<View style={{marginHorizontal:10,alignSelf:'flex-end',padding:8,marginVertical:5,backgroundColor:'#133f63', borderRadius:100, width:'75%'}}><Text style ={styles.circleTitleb}> {item.circleTextTitleb} </Text><Text style ={styles.circleTextb}> {item.circleTextb} </Text></View>: <></>}
 
-                {item.circleTextTitlea ? <Text style ={styles.circleTitlea}> {item.circleTextTitlec} </Text>: <></>}
-                {item.circleTextc ? <Text style ={styles.circleTexta}> {item.circleTextc} </Text>: <></>}
 
-                {item.circleTextTitlea ? <Text style ={styles.circleTitleb}> {item.circleTextTitled} </Text>: <></>}
-                {item.circleTextc ? <Text style ={styles.circleTextb}> {item.circleTextd} </Text>: <></>}
+                {item.circleTextc ?<View style={{marginHorizontal:10,alignSelf:'flex-start',padding:8,marginVertical:5,backgroundColor:'#133f63', borderRadius:100, width:'75%'}}><Text style ={styles.circleTitlea}> {item.circleTextTitlec} </Text><Text style ={styles.circleTexta}> {item.circleTextc} </Text></View>: <></>}
+
+
+                {item.circleTextc ?<View style={{marginHorizontal:10,alignSelf:'flex-end',padding:8,marginVertical:5,backgroundColor:'#133f63', borderRadius:100, width:'75%'}}><Text style ={styles.circleTitleb}>{item.circleTextTitled}</Text><Text style ={styles.circleTextb}>{item.circleTextd}</Text></View>: <></>}
 
                 {item.image ? <Image source={item.image} style={styles.image}  />: <></>}
                 {item.text ? <Text style={styles.text}>{item.text}</Text>: <></>}
 
                 {item.description1 ? <Text style={styles.description1}>{item.description1}</Text> : <></>}
                 {item.description1 ? <Text style={styles.description2}>{item.description2}</Text> : <></>}
-                {item.button ?  <AppButton title={item.button} color={"white"}  onPress={()=>navigation.navigate("Pretest")}/> : <></>}
+                {item.button ?<View style={{alignSelf:'center',width:'75%', marginTop:'15%'}}><AppButton title={item.button} color={"white"}  onPress={()=>navigation.navigate("Pretest")}/></View>: <></>}
                   
                 </View>
             )
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     },
     subtitle: {
       fontSize: 18,
-      top:-80,
+      top:-30,
       color: 'white',
       textAlign: 'center',
       marginHorizontal:30
@@ -149,26 +149,28 @@ const styles = StyleSheet.create({
     circleTitlea:{
       marginHorizontal:50,
       fontSize:18,
+      marginVertical:5,
       textAlign:'center',
       color: '#369e40',
     },
     circleTexta:{
       textAlign:'center',
-      marginBottom:50,
-      marginHorizontal:70,
+      marginBottom:20,
+      marginHorizontal:20,
       color:'white',
-  
+
     },
     circleTitleb:{
-      marginHorizontal:50,
+      marginHorizontal:10,
       fontSize:18,
+      marginVertical:20,
       textAlign:'center',
       color: '#369e40',
     },
     circleTextb:{
       textAlign:'center',
-      marginBottom:50,
-      marginHorizontal:70,
+      marginBottom:20,
+      marginHorizontal:10,
       color:'white',
     },
     description1: {

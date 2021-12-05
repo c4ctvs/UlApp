@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Modal, View, Alert, Image } from 'react-native';
+import { StyleSheet, Modal, View, Alert, Image, Dimensions } from 'react-native';
 import * as Yup from 'yup';
 
 import Colors from '../utils/colors';
@@ -12,6 +12,7 @@ import FormErrorMessage from '../components/Forms/FormErrorMessage';
 import { validateCode } from '../components/Firebase/firebase';
 import useStatusBar from '../hooks/useStatusBar';
 
+const win = Dimensions.get('window');
 
 export default function RegisterScreen({ navigation }) {
   useStatusBar('light-content');
@@ -50,7 +51,7 @@ export default function RegisterScreen({ navigation }) {
           placeholder="Wprowadź kod"
           autoCapitalize="none"
           autoCorrect={false}
-          color={Colors.white}
+          color={Colors.black}
           textContentType="name"
         />
         </View>

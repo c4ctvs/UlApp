@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     padding:15,
     color:'black',  
     position:'absolute',
-    left:'43.5%',
+    left:'4%',
     bottom:'5%'
   },
   text:{

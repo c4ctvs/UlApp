@@ -3,21 +3,28 @@
     "name": "Up@pp",
     "slug": "expo-firebase",
     "privacy": "public",
-    "platforms": ["ios", "android"],
-    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/flame.png",
     "splash": {
       "image": "./assets/logo2.png",
-    
       "backgroundColor": "#003159"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "con.kopecworks.awesome"
     }
   }
 }

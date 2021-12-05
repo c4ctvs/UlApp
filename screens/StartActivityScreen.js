@@ -10,7 +10,7 @@ import NextBackButton from '../components/NextBackButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { sendData } from '../components/Firebase/firebase';
 import Dialog from "react-native-dialog";
-
+import Spinner from '../components/Spinner';
 export default function StartActivity({ route, navigation}) {
 
 const screen = route.params;
@@ -21,6 +21,8 @@ const [visibility, setVisibility] = useState()
 const [text, setText] = useState('')
 const [name, setName] = useState('emoticon-cool-outline')
 const [value, setValue] = useState(0);
+const [isLoading, setIsLoading] = useState(true)
+
 const showDialog = (value) => {
   setVisibility(value)
 };
@@ -37,8 +39,11 @@ useEffect(() => {
   else
     setName('emoticon-angry-outline')
 })
-let handleOnSend = async (doc, values) =>{
+let handleOnSend = async (doc, data, value) =>{
   console.log("topic" + doc)
+  let values = {data:data,
+                value: value}
+  setIsLoading(true)
   sendData(screen.topic, doc, values).then( () => {
     setVisibility(false)
     navigation.navigate('Home')
@@ -53,11 +58,16 @@ useEffect(() => {
     const getDocs = async () => {
         let newDoc = await getTask(JSON.stringify(screen.topic), JSON.stringify(screen.id))
         setDocs(newDoc)
+        setIsLoading(false)
     }
     getDocs()
 }, [])
 
 
+
+if (isLoading) {
+  return <Spinner />;
+}
 
 return(
     <SafeAreaView style={{   justifyContent: 'center',alignItems: 'center',flex: 1,  backgroundColor: ColorsB.background}}>
@@ -74,6 +84,7 @@ return(
                 <View style={{ width, height }} >
                     {data.weekTitle ? <Text style={styles.weekTitle}>{data.weekTitle}</Text> : <></>}
                     {data.weekSubtitle ? <Text style={styles.weekSubtitle}>{data.weekSubtitle}</Text> : <></>}
+                <View style={{ height:height*0.75, justifyContent:'center', alignContent:'center', top:'13%'}}>
                     {data.greenTitle ? data.greenTitle == "ZADANIE" ? <Text style={styles.greenTitle}><MaterialCommunityIcons name="square-edit-outline" color={"#ffffff"} size={50} />  {data.greenTitle}</Text>: <Text style={styles.greenTitle}>{data.greenTitle}</Text> : <></>}
                     
                     {data.textInput ?   <TextInput
@@ -86,32 +97,30 @@ return(
                     {data.greenSubtitle ? <Text style={styles.greenSubtitle}> {data.greenSubtitle} </Text> : <></>}
                     {data.greenSubtitleIt ? <Text style={styles.greenSubtitleIt}> {data.greenSubtitleIt} </Text> : <></>}
                     {data.subtitle ? <Text style={styles.subtitle}> {data.subtitle} </Text> : <></>}
-                    {data.line  ?<Text style={{ borderBottomColor: '#3d7849',
+                    {data.line ? <Text style={{ borderBottomColor: '#3d7849',
                                    borderBottomWidth: 6,
                                    justifyContent:'center',
                         
                                    
                                    }}></Text> : <></>}
-                    {data.list2 ?  <FlatList
+                    {data.list2 ?<FlatList
                           data={data.list2}
-                          renderItem={({item}) => <Text style={styles.list}>{item}</Text>}
-                        /> :<></>}         
+                          renderItem={({item}) => <Text style={styles.list}>{item}</Text>}/> :<></>}         
                     {data.subtitle2 ?<Text style={styles.subtitle}> {data.subtitle2} </Text> : <></>}
                 
-                    {data.slider ?   <View style={styles.sliderView}><Slider min={0} max={10} step={1}
+                    {data.slider ?<View style={styles.sliderView}><Slider min={0} max={10} step={1}
                          valueOnChange={value => setValue(value)}
                          initialValue={12}
-                         knobColor='#369e40'
+                         knobColor='#808080'
                          valueLabelsBackgroundColor='grey'
-                         inRangeBarColor='grey'
-                         outOfRangeBarColor='#369e40'
+                         inRangeBarColor='#b5b5b5'
+                         outOfRangeBarColor='#808080'
                 
                     /><Text style={{textAlign:'center'}}><MaterialCommunityIcons name={name} size={40} color={"#ffffff"}/></Text></View> : <></>}
-                     {data.list ?  <FlatList
-                    
+                     {data.list ?<FlatList
+                                    style={styles.flatlist}
                                     data={data.list}
-                                    renderItem={({item}) => <Text style={styles.list}>{item}</Text>}
-                                  /> :<></>}
+                                    renderItem={({item}) => <Text style={styles.list}>{item}</Text>}/>:<></>}
                     {data.subtitle3 ?<Text style={styles.subtitle}> {data.subtitle3} </Text> : <></>}
                   
                     {data.subtitleIt ?<Text style={styles.subtitleIt}> {data.subtitleIt} </Text> : <></>}
@@ -124,13 +133,14 @@ return(
                         </View>: <></>}
                   
                     {data.hint ?<Text style={styles.hint}> {data.hint} </Text> : <></>}
+                    </View>
                     <Dialog.Container visible={visibility}>
                         <Dialog.Title>Zakończenie zadania</Dialog.Title>
                         <Dialog.Description>
                          Czy na pewno chcesz zakończyć zadanie?
                         </Dialog.Description>
                         <Dialog.Button label="Powrót" onPress={() => showDialog(false)}/>
-                        <Dialog.Button label="Wyślij"  onPress={() => handleOnSend(data.id, text)}/>
+                        <Dialog.Button label="Wyślij"  onPress={() => handleOnSend(data.id, text, value)}/>
                   </Dialog.Container>
                 </View>
             )
@@ -173,13 +183,18 @@ const styles = StyleSheet.create({
       width:'30%',
 
   },
+  flatlist:{
+    top:'10%',
+    padding:0,
+  },
   list:{
     fontSize: 16,
     color: 'white',
-    textAlign: 'left',
-    marginHorizontal:10,
+    textAlign: 'center',
+
     fontFamily:'sans-serif-light',
-    padding:5,
+    padding:10,
+
   },
     image: {
       width: 320,
@@ -202,7 +217,7 @@ const styles = StyleSheet.create({
   
     },
     weekTitle: {
-     
+     position:'absolute',
       top: 40,
       left: 20,
       fontSize: 16,
@@ -212,20 +227,21 @@ const styles = StyleSheet.create({
   
     },
     weekSubtitle: {
-     
-      top: 40,
+      position:'absolute',
+      top: '7%',
       left: 20,
-      fontSize: 22,
-      marginBottom:40,
+      fontSize: 18,
+  
       color: '#369e40',
       textAlign: 'left',
       fontFamily:'sans-serif-medium'
   
     },
    greenTitle: {
-      top: 40,
+
+
       fontSize: 30,
-      marginBottom:40,
+      alignSelf:'center',
       color: '#369e40',
       textAlign: 'center',
       fontFamily:'sans-serif-medium',
@@ -247,10 +263,11 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       marginHorizontal:10,
       fontFamily:'sans-serif-light',
-      padding:30,
+ 
       fontStyle:'italic'
     },
     greenSubtitle: {
+   
       fontSize: 16,
       color: '#369e40',
       textAlign: 'center',
@@ -264,9 +281,8 @@ const styles = StyleSheet.create({
       fontSize: 16,
       color: '#369e40',
       textAlign: 'center',
-      marginVertical:40,
+      marginHorizontal:40,
       fontFamily:'sans-serif-medium',
-      padding:30,
       fontStyle:'italic'
   
     },

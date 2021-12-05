@@ -8,6 +8,8 @@ import ChooseDayScreen from '../screens/ChooseDayScreen';
 import StartActivityScreen from '../screens/StartActivityScreen';
 import WyzwalaczScreen from '../screens/WyzwalaczScreen';
 import Pretest from '../screens/PretestScreen'
+import TaskDetails from '../screens/TaskDetails'
+import FLoginToday from '../screens/FLoginToday'
 
 const Stack = createStackNavigator();
 
@@ -23,6 +25,8 @@ export default function AppStack() {
       <Stack.Screen name="Wyzwalacz" component={WyzwalaczScreen} />
       <Stack.Screen name="Pretest" component={Pretest} />
       <Stack.Screen name="FirstTime" component={FirstTime} />
+      <Stack.Screen name="TaskDetails" component={TaskDetails} />
+      <Stack.Screen name="FLoginToday" component={FLoginToday} />
     </Stack.Navigator>
 
   );

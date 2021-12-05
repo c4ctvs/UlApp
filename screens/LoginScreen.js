@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, Text, View, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, Image, Dimensions } from 'react-native';
 import * as Yup from 'yup';
 
 import Colors from '../utils/colors';
@@ -11,8 +11,9 @@ import IconButton from '../components/IconButton';
 import { loginWithEmail } from '../components/Firebase/firebase';
 import FormErrorMessage from '../components/Forms/FormErrorMessage';
 import useStatusBar from '../hooks/useStatusBar';
+import Spinner from '../components/Spinner';
 
-
+const win = Dimensions.get('window');
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required('Wprowadź adres email')
@@ -26,7 +27,7 @@ const validationSchema = Yup.object().shape({
 
 export default function LoginScreen({ navigation }) {
   useStatusBar('light-content');
-
+  const [isLoading, setIsLoading] = useState(false);
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIcon, setRightIcon] = useState('eye');
   const [loginError, setLoginError] = useState('');
@@ -44,12 +45,17 @@ export default function LoginScreen({ navigation }) {
   async function handleOnLogin(values) {
     const { email, password } = values;
     try {
+      setIsLoading(true)
       await loginWithEmail(email, password);
- 
-    } catch (error) {
+      } catch (error) {
       setLoginError(error.message);
     }
   }
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
 
   return (
     <SafeView style={styles.container}>
@@ -123,9 +129,10 @@ const styles = StyleSheet.create({
   logo: {
     padding:0,
     marginTop:160,
-    width: 400,
-    height: 400,
+    alignSelf:'center',
     opacity:0.5,
-    position:'absolute'
+    position:'absolute',
+    width: win.width,
+    height: win.height/2,
   },
 });

@@ -1,22 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, Alert, Text } from 'react-native';
+import { View, StyleSheet, Dimensions, Image } from 'react-native';
 import useStatusBar from '../hooks/useStatusBar';
 import SafeView from '../components/SafeView';
 import Colors from '../utils/colors';
-import { logout, firstLogin, firstLoginToday } from '../components/Firebase/firebase';
+import {firstLogin, isFirstLogin } from '../components/Firebase/firebase';
 import { getNamesOfCategories } from '../components/Firebase/firebase';
 import AppButton from '../components/AppButton';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import Spinner from '../components/Spinner';
+
+const win = Dimensions.get('window');
 
 export default function HomeScreen({navigation}) {
   useStatusBar('dark-content');
-  let categories = [];
+
  
-
+  const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([])
-
+  const [didLoginToday, setDidLoginToday] = useState(false)
   const [checkFirstLogin, set] = useState()
+
+  useEffect(()=>{
+    const getData = async () => {
+      let new_data = await isFirstLogin()
+      setDidLoginToday(new_data)
+    }
+    getData()
+    console.log(didLoginToday)
+    if(!didLoginToday){
+      navigation.navigate("FLoginToday")
+    }
+  
+  })
+
   useEffect(() =>{
     let fl
     let check = async () => {
@@ -32,17 +48,20 @@ export default function HomeScreen({navigation}) {
 
   useEffect(() => {
     const getData = async () => {
+
       let new_data = await getNamesOfCategories()
+      setIsLoading(false)
       setData(new_data)
-  
-      
     }
     getData()
 
   }, [])
 
+  
+  if (isLoading) {
+    return <Spinner />;
+  }
 
-  const Tab = createBottomTabNavigator();
   return (
     <SafeView style={styles.container}>
    
@@ -55,7 +74,7 @@ export default function HomeScreen({navigation}) {
             })}}/>
         })}
       </View>
-       
+      <Image source={require('../assets/logo2.png')} style={styles.logo} />
     </SafeView>
     
     );
@@ -77,7 +96,17 @@ const styles = StyleSheet.create({
   },
   buttons:{
     fontSize:12,
-  }
+  },  
+  logo: {
+    padding:0,
+    alignSelf:'center',
+    position:'absolute',
+    bottom:'2%',
+    right:'2%',
+    opacity:0.5,
+    width: win.width/4,
+    height: win.height/8,
+  },
 
 });
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Modal, View, Image, Alert } from 'react-native';
+import { StyleSheet, Modal, View, Image, Alert, Dimensions } from 'react-native';
 import * as Yup from 'yup';
 
 import Colors from '../utils/colors';
@@ -11,7 +11,11 @@ import IconButton from '../components/IconButton';
 import FormErrorMessage from '../components/Forms/FormErrorMessage';
 import { registerWithEmail } from '../components/Firebase/firebase';
 import useStatusBar from '../hooks/useStatusBar';
-import MyModal from '../components/misc/Modal';
+import Spinner from '../components/Spinner';
+
+
+
+const win = Dimensions.get('window');
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -29,7 +33,7 @@ const validationSchema = Yup.object().shape({
 
 export default function RegisterScreen({ navigation }) {
   useStatusBar('light-content');
-
+  const [isLoading, setIsLoading] = useState(false)
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIcon, setRightIcon] = useState('eye');
   const [confirmPasswordIcon, setConfirmPasswordIcon] = useState('eye');
@@ -61,12 +65,19 @@ export default function RegisterScreen({ navigation }) {
   async function handleOnSignUp(values, actions) {
     const { email, password } = values;
     try {
+      setIsLoading(true)
       await registerWithEmail(email, password);
     } catch (error) {
       Alert.alert(error.message);
     }
   }
   const [modalVisible, setModalVisible] = useState(true);
+
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
 
    
@@ -150,12 +161,13 @@ const styles = StyleSheet.create({
     marginVertical: 10
   },
   logo: {
-
+    padding:0,
     marginTop:160,
-    width: 400,
-    height: 400,
+    alignSelf:'center',
     opacity:0.5,
-    position:'absolute'
+    position:'absolute',
+    width: win.width,
+    height: win.height/2,
   },
   
 });

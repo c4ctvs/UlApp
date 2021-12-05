@@ -95,13 +95,16 @@ const styles = StyleSheet.create({
     fontSize:18,
     textAlign:'left',
     color: '#369e40',
+    backgroundColor:'white',
+    padding:100
   },
   circleTexta:{
     textAlign:'center',
     marginBottom:50,
     marginHorizontal:70,
     color:'white',
-
+    backgroundColor:'white',
+    padding:100
   },
   circleTitleb:{
     marginHorizontal:50,

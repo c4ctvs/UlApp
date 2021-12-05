@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, Alert, Text } from 'react-native';
+import { View, StyleSheet, Button, Text, Image, Dimensions, Alert } from 'react-native';
 import useStatusBar from '../hooks/useStatusBar';
 import SafeView from '../components/SafeView';
 import Colors from '../utils/colors';
 import { logout, getEmail } from '../components/Firebase/firebase';
 import MenuAppButton from '../components/MenuAppButton';
+import Spinner from '../components/Spinner';
+import { NavigationContainer } from '@react-navigation/native';
+const win = Dimensions.get('window');
 
-
-export default function SettingsScreen() {
+export default function SettingsScreen({navigation}) {
+  const [isLoading, setIsLoading] = useState(true)
   useStatusBar('dark-content');
   async function handleSignOut() {
     try {
@@ -16,22 +19,31 @@ export default function SettingsScreen() {
       console.log(error);
     }
   }
+
+  const handlePasswordChange = () =>{
+    const currentPass = Alert.alert('Please enter current password');
+  }
   const [email, setEmail] = useState()
 
   useEffect(() => {
       const email = async () => {
           let newDoc = await getEmail()
           setEmail(newDoc)
+          setIsLoading(false)
       }
       email()
   })
   
+if (isLoading) {
+  return <Spinner />;
+}
   return (
     <SafeView style={styles.container}>
         <Text style={styles.header}>Zalogowany jako: {email}</Text> 
+        <Image source={require('../assets/logo2.png')} style={styles.logo} />
         <MenuAppButton title="Wyloguj się" style={styles.logoutButton} onPress={handleSignOut} />
-        <MenuAppButton title="Zmień haslo" style={styles.logoutButton} />
-        <MenuAppButton title="Zmień wyzwalacze" style={styles.logoutButton} />
+        <MenuAppButton title="Zmień haslo" style={styles.logoutButton} onPress={() =>handlePasswordChange()}/>
+        <MenuAppButton title="Zmień wyzwalacze" style={styles.logoutButton}/>
         
 
        
@@ -62,7 +74,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize:20,
     color:Colors.lightGrey,
-    marginTop:100
+    marginTop:40
+},
+logo: {
+  alignSelf:'center',
+  width: win.width/1.2,
+  height: win.height/2.4,
 },
 
 });
