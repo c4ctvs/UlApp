@@ -3,30 +3,24 @@ import { View, SafeAreaView, StyleSheet, TouchableOpacity, Button, Alert, Text, 
 import { ScrollView } from 'react-native-gesture-handler';
 import { textDecorationColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { getDays, getTitle, getAvaiability, updateAv } from '../components/Firebase/firebase';
-import Spinner from '../components/Spinner';
+import { getDays, getTitle, getAvaiability} from '../components/Firebase/firebase';
+
 import ColorsB from '../utils/colors.js'
 
 
 export default function DescriptionScreen({ route, navigation}) {
-    console.log("id"+route.params.id)
-    let update = async () => {
-        await updateAv(route.params.id)
-    }
-    
-update()
+
 
 const screen = route.params;
 const [days, setDays] = useState([])
 const [buttonData, getButtonData] = useState([])
-const [isLoading, setIsLoading] = useState(true)
+
 
 
 
 useEffect(() => {
     const get = async () => {
         let data = await getAvaiability(screen.id)
-        setIsLoading(false)
         getButtonData(data)
     }
     get()
@@ -45,10 +39,6 @@ useEffect(() => {
 
 
 let i=0
-
-if (isLoading) {
-    return <Spinner />;
-  }
 
 return(
 

@@ -9,81 +9,33 @@ import { sendData } from '../components/Firebase/firebase';
 import Spinner from '../components/Spinner';
 
 
-export default function FLoginToday({ route, navigation}) {
+export default function DidntTaskScreen({ route, navigation}) {
 
 const screen = route.params;
-
-const [isLoading, setIsLoading] = useState(true);
-const [doc, setDocs] = useState([])
 const { width, height } = Dimensions.get('window');
 
-let handleOnSend = async (doc, data, value) =>{
-  let values = {data:data,
-                value: value}
- 
-  sendData(screen.topic, doc, values).then( () => {
-    setVisibility(false)
+
+let handleOnSend = async () =>{
+    sendZasobki(screen.week, screen.day, 0).then( () => {
     navigation.navigate('Home')
   })
  
-}
 
 
 
-useEffect(() => {
-  setIsLoading(true)
-    const getDocs = async () => {
-        let newDoc = await getQuestions(screen.week, screen.day)
-        setDocs(newDoc)
-        setIsLoading(false)
-    }
-    getDocs()
-
-}, [])
-
-  
-if (isLoading) {
-  return <Spinner />;
-}
 
 return(
     <SafeAreaView style={{   justifyContent: 'center',alignItems: 'center',flex: 1,  backgroundColor: ColorsB.background}}>
-        <ScrollView  
-          horizontal={true}
-          scrollEventThrottle={16}
-          pagingEnabled={true}
-          showsVerticalScrollIndicator={true}
-          >
-        {
-            doc.map((data) => {
-            return(
-                console.log("WYNIK" + data),
-                <View style={{ width, height, justifyContent: 'center',alignItems: 'center',flex: 1 }} >
-                
-                    {data.greenTitle ? data.greenTitle == "ZADANIE" ? <Text style={styles.greenTitle}><MaterialCommunityIcons name="square-edit-outline" color={"#ffffff"} size={50} />  {data.greenTitle}</Text>: <Text style={styles.greenTitle}>{data.greenTitle}</Text> : <></>}
-                    {data.greenSubtitle ? <Text style={styles.greenSubtitle}> {data.greenSubtitle} </Text> : <></>}
-                    {data.greenSubtitleIt ? <Text style={styles.greenSubtitleIt}> {data.greenSubtitleIt} </Text> : <></>}
-                    {data.subtitle ? <Text style={styles.subtitle}> {data.subtitle} </Text> : <></>}
-                    {data.subtitle2 ?<Text style={styles.subtitle}> {data.subtitle2} </Text> : <></>}
-                    {data.subtitle3 ?<Text style={styles.subtitle}> {data.subtitle3} </Text> : <></>}
-                    {data.send  ?  <View style={{width:"50%", left:'25%'}}><NextBackButton title="Wyślij" onPress = {() => showDialog(true)}/></View> : <></>} 
-                    {data.button1 ?
-                        <View style={styles.parent}>
-                            <NextBackButton  title={"   "+data.button1+"   "} style={styles.buttons} onPress={()=>navigation.navigate("DidTask", {"week":screen.week, "day":screen.day})}/>
-                            <NextBackButton  title={"    "+data.button2+"    "}  style={styles.buttons} onPress={()=>navigation.navigate("DidntTask", {"week":screen.week, "day":screen.day})}/>
-                        </View>: <></>}
-                  
-                    {data.hint ?<Text style={styles.hint}> {data.hint} </Text> : <></>}
-              
-                </View>
-            )
-            })
-        }
-        </ScrollView>
+       <View style={{ width, height, justifyContent: 'center',alignItems: 'center',flex: 1, backgroundColor: ColorsB.background }} >
+       <Text style={styles.subtitle}> Powróć do zagadnień o których czytałeś wczoraj.</Text>
+            <Text style={styles.subtitle}> Spróbuj przeanalizować te kwestie.</Text>
+            <NextBackButton  title={"   POWRÓT NA STRONĘ GŁÓWNĄ   "} style={styles.buttons} onPress={()=>handleOnSend()}/>
+            
+      </View>
     </SafeAreaView>
     )
 } 
-
+}
 
 const styles = StyleSheet.create({
   parent:{
@@ -245,4 +197,3 @@ const styles = StyleSheet.create({
          
       }
   });
-  

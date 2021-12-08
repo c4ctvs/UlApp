@@ -31,9 +31,9 @@ useEffect(() => {
 
         <View style={{height:win.height*0.75, alignContent:'center', top:'13%'}}>
             <Text style={styles.subtitle}>Twoje notatki:</Text>
-            <Text style={styles.text}>{data[route.params.id].data}</Text>
+            {data[route.params.id]?<Text style={styles.text}>{data[route.params.id].data}</Text>:<></>}
             <Text style={styles.subtitle2}>Twoje napięcie:</Text>
-            <Text style={styles.text}>{data[route.params.id].value}</Text>
+            {data[route.params.id]?<Text style={styles.text}>{data[route.params.id].value}</Text>:<></>}
             </View> 
 
   

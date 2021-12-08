@@ -11,6 +11,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { sendData } from '../components/Firebase/firebase';
 import Dialog from "react-native-dialog";
 import Spinner from '../components/Spinner';
+
 export default function StartActivity({ route, navigation}) {
 
 const screen = route.params;
@@ -125,7 +126,7 @@ return(
                   
                     {data.subtitleIt ?<Text style={styles.subtitleIt}> {data.subtitleIt} </Text> : <></>}
                     {data.summary  ?<Text style={styles.summary}> {data.summary} </Text> : <></>}
-                    
+                 
                     {data.send  ?  <View style={{width:"50%", left:'25%'}}><NextBackButton title="Wyślij" onPress = {() => showDialog(true)}/></View> : <></>} 
                     {data.button1 ?
                         <View style={styles.parent}>

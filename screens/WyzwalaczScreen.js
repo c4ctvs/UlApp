@@ -7,24 +7,41 @@ import SelectDropdown from 'react-native-select-dropdown'
 import AppButton from "../components/AppButton";
 import { ScrollView } from 'react-native-gesture-handler'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import {sendWyzwalacze, getWyzwalacze} from '../components/Firebase/firebase'
 let i=0;
-
+let x_, y_;
 const win = Dimensions.get('window');
 export default function WyzwalaczScreen({ route, navigation}) {
 
 let [elements, setElements] = useState([])
-
-
 const [modalVisible, setModalVisible] = useState(false)
 
+useEffect(() => {
+  const importWyzwalacze = async() =>{
+      let wyzw = await getWyzwalacze()
+      setElements(wyzw)
+  }
+  importWyzwalacze()
+},[])
+
 const handleOnSend = () =>{
-  let values=[]
+  let values = [...elements]
+
+  sendWyzwalacze(values).then(() =>{
   navigation.goBack()
+})
+}
+let randomize = () =>{
+
+  x_ = Math.floor(Math.random() * (200 - 25 + 1) + 25)
+  y_ = Math.floor(Math.random() * (200 - 25 + 1) + 25)
 }
 
+
 const addElement = (wyzwalaczName, index) =>{
-    setElements([...elements, {clientName: wyzwalaczName, key:i, colorid:index}])
+    randomize()
+    console.log(x_, y_)
+    setElements([...elements, {clientName: wyzwalaczName, key:i, colorid:index, x_:x_, y_:y_}])
     i+=1
     setModalVisible(false)
 }
@@ -113,11 +130,11 @@ return (
        
  
     <AddButton onPress={() => setModalVisible(true)} />
-    <View style={{width:'25%', alignSelf:'flex-end', margin:20, top:'33.9%'}} onPress={()=> navigation.goBack()}><AppButton title="Wyślij" color={"white"} /></View>
+    <View style={{width:'25%', alignSelf:'flex-end', margin:20, top:'33.9%'}}><AppButton title="Wyślij" color={"white"} onPress={()=> handleOnSend()} /></View>
    {modalVisible?<MyModal visible={modalVisible}/>:<></>} 
    { 
        elements.map(element =>{
-            return <MyDraggable colorid={element.colorid} text={element.clientName} onPress={()=>deleteWyzwalacz(element)}/>
+            return <MyDraggable onDragRelease={(e) => {element.x_=e.nativeEvent.pageX, element.y_= e.nativeEvent.pageY;}} x_={element.x_} y_={element.y_} colorid={element.colorid} text={element.clientName} onPress={()=>deleteWyzwalacz(element)}/>
         })
     }
     </View>

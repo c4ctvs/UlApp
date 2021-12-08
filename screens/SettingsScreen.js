@@ -43,7 +43,7 @@ if (isLoading) {
         <Image source={require('../assets/logo2.png')} style={styles.logo} />
         <MenuAppButton title="Wyloguj się" style={styles.logoutButton} onPress={handleSignOut} />
         <MenuAppButton title="Zmień haslo" style={styles.logoutButton} onPress={() =>handlePasswordChange()}/>
-        <MenuAppButton title="Zmień wyzwalacze" style={styles.logoutButton}/>
+        <MenuAppButton title="Zmień wyzwalacze" style={styles.logoutButton} onPress={()=> navigation.navigate("Wyzwalacz")}/>
         
 
        

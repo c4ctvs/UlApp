@@ -3,7 +3,7 @@ import { View, StyleSheet, Dimensions, Image } from 'react-native';
 import useStatusBar from '../hooks/useStatusBar';
 import SafeView from '../components/SafeView';
 import Colors from '../utils/colors';
-import {firstLogin, isFirstLogin } from '../components/Firebase/firebase';
+import {firstLogin, isFirstLoginToday } from '../components/Firebase/firebase';
 import { getNamesOfCategories } from '../components/Firebase/firebase';
 import AppButton from '../components/AppButton';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -17,21 +17,27 @@ export default function HomeScreen({navigation}) {
  
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([])
-  const [didLoginToday, setDidLoginToday] = useState(false)
+  const [loginToday, setDidLoginToday] = useState(false)
   const [checkFirstLogin, set] = useState()
 
   useEffect(()=>{
     const getData = async () => {
-      let new_data = await isFirstLogin()
+      let new_data = await isFirstLoginToday(0)
       setDidLoginToday(new_data)
     }
     getData()
-    console.log(didLoginToday)
-    if(!didLoginToday){
-      navigation.navigate("FLoginToday")
+    console.log(loginToday)
+   
+    
+  }, [])
+
+  useEffect(() => {
+    console.log(loginToday); //check the result here
+    if(loginToday!=[99,99] && loginToday[0]!= undefined && loginToday[1]!= undefined){
+      console.log(loginToday)
+      navigation.navigate("FLoginToday", {'week':loginToday[0], 'day':loginToday[1]})
     }
-  
-  })
+  }, [loginToday])
 
   useEffect(() =>{
     let fl
