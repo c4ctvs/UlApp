@@ -162,7 +162,7 @@ const styles = EStyleSheet.create({
     margin:'15%',
   },
   sliderView:{
-    marginTop:'15%',
+    marginTop:'2%',
     width:'75%',
     marginHorizontal:"15%"
   },
@@ -214,7 +214,7 @@ const styles = EStyleSheet.create({
     },
     weekTitle: {
      position:'absolute',
-      top: '3%',
+      top: '6%',
       left: '5%',
       fontSize:'1rem',
       color: '#369e40',
@@ -224,19 +224,18 @@ const styles = EStyleSheet.create({
     },
     weekSubtitle: {
       position:'absolute',
-      top: '5%',
+      top: '8%',
       left: '5%',
-      fontSize:'1.2rem',
-  
+      fontSize:'1.1rem',
       color: '#369e40',
       textAlign: 'left',
-      fontFamily:'sans-serif-medium'
+      fontFamily:'sans-serif-medium',
   
     },
    greenTitle: {
 
 
-      fontSize:'2rem',
+      fontSize:'1.6rem',
       alignSelf:'center',
       color: '#369e40',
       textAlign: 'center',
@@ -245,7 +244,7 @@ const styles = EStyleSheet.create({
  
     },
     subtitle: {
-      fontSize:'1rem',
+      fontSize:'0.9rem',
       color: 'white',
       textAlign: 'center',
       marginHorizontal:'6%',
@@ -282,7 +281,7 @@ const styles = EStyleSheet.create({
   
     },
     summary: {
-        fontSize:'1rem',
+      fontSize:'0.9rem',
         color: 'white',
         textAlign: 'center',
         marginHorizontal:'7%',

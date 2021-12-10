@@ -121,9 +121,9 @@ return (
   showsVerticalScrollIndicator={true}>
     <View style={{ width, height, backgroundColor:Colors.background}}>
     <Text style={styles.greenTitle}> Wyzwalacze </Text>
-    <Text style={{color:'white', fontFamily:'sans-serif-light',fontSize:16, marginHorizontal:12, textAlign:'center', marginTop:15, padding:10}}>Wyzwalacze to wszystko to, co wprawia ruch określone procesy psychologiczne – w tym przypadku napięcia.  </Text>
-    <Text style={{color:'white', fontFamily:'sans-serif-light',fontSize:16, marginHorizontal:12, textAlign:'center', marginTop:15, padding:10}}> Nie są one same w sobie przyczyną, ale ostatecznym „bodźcem” do wydobycia określonej reakcji – np. stresu.  Emocjonalne wyzwalacze są jak „czerwone przyciski”, które po naciśnięciu aktywują pewne emocje i uczucia. Wyzwalaczem może stać się wszystko, czemu nadajesz znaczenie, co jest dla Ciebie ważne, a co powoduje silne napięcie kiedy tego doświadczasz. Mogą to być konkretni ludzie, Ci znaczący, których spotykasz na co dzień (np. Partner/ka, dziecko) bądź wasze kontakty są epizodyczne (np. Ekspedientka w sklepie, dostawca), sytuacje, których doświadczasz (np. Kłótnia, rozmowa z przełożonym). Wśród wyzwalaczy mogą znaleźć się również rzeczy (np.. Strzykawka) czy bodźce zmysłowe (np. Smak, melodia), które uwalniają proces przypominania.  </Text>
-    <Text style={{color:'white', fontFamily:'sans-serif-light',fontSize:16, marginHorizontal:12, textAlign:'center', marginTop:15, padding:10}}> Na następnej stronie możesz dodać i zakategoryzować swoje własne wyzwalacze.</Text>
+    <Text style={styles.text}>Wyzwalacze to wszystko to, co wprawia ruch określone procesy psychologiczne – w tym przypadku napięcia.  </Text>
+    <Text style={styles.text}> Nie są one same w sobie przyczyną, ale ostatecznym „bodźcem” do wydobycia określonej reakcji – np. stresu.  Emocjonalne wyzwalacze są jak „czerwone przyciski”, które po naciśnięciu aktywują pewne emocje i uczucia. Wyzwalaczem może stać się wszystko, czemu nadajesz znaczenie, co jest dla Ciebie ważne, a co powoduje silne napięcie kiedy tego doświadczasz. Mogą to być konkretni ludzie, Ci znaczący, których spotykasz na co dzień (np. Partner/ka, dziecko) bądź wasze kontakty są epizodyczne (np. Ekspedientka w sklepie, dostawca), sytuacje, których doświadczasz (np. Kłótnia, rozmowa z przełożonym). Wśród wyzwalaczy mogą znaleźć się również rzeczy (np.. Strzykawka) czy bodźce zmysłowe (np. Smak, melodia), które uwalniają proces przypominania.  </Text>
+    <Text style={styles.text}> Na następnej stronie możesz dodać i zakategoryzować swoje własne wyzwalacze.</Text>
     </View>
     <View style={{ width, height, backgroundColor:Colors.background}}>
        <Text style={styles.greenTitle1}>Osobiste</Text>
@@ -134,16 +134,18 @@ return (
                                    
                                    }}></Text> 
        <Text style={styles.greenTitle2}>Zawodowe</Text>
-       
- 
-    <AddButton onPress={() => setModalVisible(true)} />
-    <View style={{width:'25%', alignSelf:'flex-end', margin:'5%', top:'33.9%'}}><AppButton title="Wyślij" color={"white"} onPress={()=> handleOnSend()} /></View>
+    
    {modalVisible?<MyModal visible={modalVisible}/>:<></>} 
    {
        elements.map(element =>{
             return <MyDraggable onDragRelease={(e) => {element.x_=e.nativeEvent.pageX, element.y_= e.nativeEvent.pageY;}} x_={element.x_} y_={element.y_} colorid={element.colorid} text={element.clientName} onPress={()=>deleteWyzwalacz(element)}/>
         })
     }
+       
+    <View style={{width:'25%',justifyContent:'space-between', flexDirection:'row',  margin:'5%', marginTop:'60%'}}>
+        <AddButton onPress={() => setModalVisible(true)} />
+        <AppButton title="Wyślij" color={"white"} onPress={()=> handleOnSend()} />
+    </View>
     </View>
   
     </ScrollView>
@@ -153,6 +155,15 @@ return (
 
 
 const styles = EStyleSheet.create({
+  text:{
+    color:'white', 
+    fontFamily:'sans-serif-light',
+    fontSize:'0.9rem', 
+    marginHorizontal:'2%', 
+    textAlign:'center',
+    marginTop:'2%', 
+    padding:'2%'
+  },
     container: {
  
         backgroundColor: Colors.background
@@ -177,10 +188,7 @@ const styles = EStyleSheet.create({
         padding:7,
         backgroundColor:'white'
       },
-      text:{
-        fontSize:'1rem',
-        color:'black',
-      },
+    
       greenTitle1: {
         position:'absolute',
         top: '7%',

@@ -81,7 +81,7 @@ const styles = EStyleSheet.create({
   greenField:{
     color: '#3d7849',
     fontFamily:'sans-serif-medium',
-    fontSize: '1.5rem',
+    fontSize: '1.4rem',
     textAlign:'center',
     textTransform:'uppercase',
     backgroundColor: '#c2c2c2',
@@ -100,7 +100,7 @@ const styles = EStyleSheet.create({
     text: {
       color: 'white',
       textAlign: 'center',
-      fontSize: '1rem',
+      fontSize: '0.9rem',
       marginHorizontal: 12
   
     },
@@ -114,7 +114,7 @@ const styles = EStyleSheet.create({
     },
     
     subtitle: {
-      fontSize: '1rem',
+      fontSize: '0.9rem',
       color: 'white',
       textAlign: 'center',
       marginHorizontal:'6%',
@@ -123,7 +123,7 @@ const styles = EStyleSheet.create({
   
     },
     summary: {
-        fontSize: '1rem',
+      fontSize: '0.9rem',
         color: 'white',
         textAlign: 'right',
         marginHorizontal:'6%',
