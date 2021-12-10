@@ -2,14 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import SafeView from '../components/SafeView';
 import Colors from '../utils/colors';
-import { getDays, getAvaiability } from '../components/Firebase/firebase';
+import { getDays, getAvaiability, getZasobki } from '../components/Firebase/firebase';
 import Spinner from '../components/Spinner';
+import EStyleSheet from 'react-native-extended-stylesheet';
+
 export default function MaterialsScreen({navigation}) {
+  EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
+
+  });
 
   const [days, setDays] = useState([])
   const [buttonData, getButtonData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-
+  const [zasobki, setZasobki] = useState(0);
    
 useEffect(() => {
   const get = async () => {
@@ -26,11 +31,18 @@ let i=0
 useEffect(() => {
   const getDaystoDisplay = async () => {
       let newDay = await getDays(JSON.stringify(0))
-      console.log("Day: " + newDay)
       setDays(newDay)
   }
   getDaystoDisplay()
 }, [])
+
+useEffect(() => {
+  const updateZasobki = async () => {
+    let zas = await getZasobki()
+    setZasobki(zas)
+}
+updateZasobki()
+})
 
 const handleOnPress = (topic, id) => {
 
@@ -69,6 +81,7 @@ if (isLoading) {
           )
 
           }
+          <Text style={styles.header}>Ilość zasobków: {zasobki}</Text>
           <Text style={styles.header}>Materiały do odblokowania:</Text>     
        
     </SafeView>
@@ -76,13 +89,13 @@ if (isLoading) {
     );
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   subtitleDone: {
-    fontSize: 20,
+    fontSize: '1.1rem',
     color: 'white',
     textAlign: 'center',
-    marginHorizontal:30,
-    padding:5,
+    marginHorizontal:'5%',
+    padding:'1%',
     fontFamily:'sans-serif-light',
 
 
@@ -97,23 +110,15 @@ const styles = StyleSheet.create({
 
     width: '30%',
   },
-  menuButton:{
-    margin:30,
-    padding:20
-  },
-  buttons:{
-    fontSize:12,
-  },
   header:{
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize:20,
+    fontSize:'1.1rem',
     color:Colors.lightGrey,
-    marginVertical:10
+    marginVertical:'2%'
 },
 title:{
-
-  fontSize:18,
+  fontSize:'1rem',
   textAlign:'center',
   color: '#369e40',
 },

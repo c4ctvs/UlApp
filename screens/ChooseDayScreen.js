@@ -4,13 +4,15 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { textDecorationColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { getDays, getTitle, getAvaiability} from '../components/Firebase/firebase';
-
+import EStyleSheet from 'react-native-extended-stylesheet';
 import ColorsB from '../utils/colors.js'
 
 
 export default function DescriptionScreen({ route, navigation}) {
 
+    EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
 
+    });
 const screen = route.params;
 const [days, setDays] = useState([])
 const [buttonData, getButtonData] = useState([])
@@ -91,13 +93,13 @@ return(
     )
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
     title: {
         position:'absolute',
-        top: 40,
-        right: 20,
-        fontSize: 20,
-        marginBottom:40,
+        top:'5%',
+        right: '5%',
+        fontSize: '1.2rem',
+        marginBottom:'10%',
         color: '#369e40',
         textAlign: 'left',
         fontFamily:'sans-serif-medium'
@@ -105,48 +107,48 @@ const styles = StyleSheet.create({
       },
     appButtonContainer: {
    
-        paddingVertical: 10,
-        paddingHorizontal: 12
+        paddingVertical: '3%',
+        paddingHorizontal:'3%'
       },
     buttons:{
         backgroundColor: ColorsB.white,
     },
 
     subtitle: {
-      fontSize: 26,
+      fontSize: '1.7rem',
       color: 'white',
       textAlign: 'center',
-      marginHorizontal:30,
+      marginHorizontal:'5%',
       fontFamily:'sans-serif-light',
-      margin:10
+      margin:'2%'
   
     }, 
      subtitleDone: {
-        fontSize: 26,
+        fontSize: '1.7rem',
         color: 'green',
         textAlign: 'center',
-        marginHorizontal:30,
+        marginHorizontal:'5%',
         fontFamily:'sans-serif-light',
-        margin:10
+        margin:'2%'
     
       },
 
     subtitleDisabled: {
-        fontSize: 26,
+        fontSize: '1.7rem',
         color: '#c4c4c4',
         textAlign: 'center',
-        marginHorizontal:30,
+        marginHorizontal:'5%',
         fontFamily:'sans-serif-light',
-        margin:10
+        margin:'2%'
     
       },
     subtitle2: {
-        fontSize: 20,
+        fontSize: '1.7rem',
         color: 'white',
         textAlign: 'center',
-        marginHorizontal:30,
+        marginHorizontal:'5%',
         fontFamily:'sans-serif-light',
-        margin:10
+        margin:'2%'
     
       },
 

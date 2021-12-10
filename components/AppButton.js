@@ -1,9 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-
+import EStyleSheet from 'react-native-extended-stylesheet';
 import Colors from '../utils/colors';
 
 export default function AppButton({ title, onPress, disabled, color}) {
+  EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
+
+  });
+
   if(disabled){
     return(
       <TouchableOpacity
@@ -25,40 +29,30 @@ export default function AppButton({ title, onPress, disabled, color}) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   button: {
-    marginVertical: 10,
-    borderRadius: 25,
-    marginTop:30,
+    marginVertical: '4%',
+    borderRadius: '2rem',
+    marginTop:'10%',
     justifyContent: 'center',
+    textAlign:'center',
     alignItems: 'center',
-    padding: 15,
+    padding: '6%',
     width: '100%'
   
   },
   disabled: {
     color: Colors.mediumGrey,
-    fontSize: 16,
+    fontSize: '1rem',
     fontWeight: '600',
     textTransform: 'uppercase',
-    
+    textAlign:'center',
   },
   buttonText: {
     color: Colors.black,
-    fontSize: 16,
+    fontSize: '1rem',
     fontWeight: '600',
     textTransform: 'uppercase',
-    
-  },
-  menuButton: {
-    marginVertical: 10,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
     textAlign:'center',
-    padding: 15,
-    width: '70%',
-    margin:70,
-    backgroundColor:Colors.lightGrey
-  }
+  },
 });

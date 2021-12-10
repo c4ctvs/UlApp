@@ -6,13 +6,17 @@ import Colors from '../utils/colors';
 import useStatusBar from '../hooks/useStatusBar';
 import { checkIfUserIsLoggedIn } from '../components/Firebase/firebase';
 import { getNamesOfCategories } from '../components/Firebase/firebase';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 
 const win = Dimensions.get('window');
 
 
 export default function WelcomeScreen({ navigation }) {
-  
+  EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
+
+  });
+
   checkIfUserIsLoggedIn()
   useStatusBar('light-content');
 
@@ -40,7 +44,7 @@ export default function WelcomeScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -49,12 +53,12 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     position: 'absolute',
-    top: 60,
+    top: '15%',
     alignItems: 'center'
   },
   logo: {
     padding:0,
-    marginTop:110,
+    marginTop:'15%',
     alignSelf:'center',
     position:'absolute',
     width: win.width,
@@ -62,14 +66,14 @@ const styles = StyleSheet.create({
   },
   
   subtitle: {
-    fontSize: 24,
+    fontSize: '1.2rem',
     fontWeight: '600',
-    paddingVertical: 20,
+    paddingVertical: '5%',
     color: Colors.lightGrey
   },
   buttonContainer: {
-    padding: 20,
-    paddingBottom: 90,
+    padding: '5%',
+    paddingBottom: '10%',
     width: '100%'
   }
 });

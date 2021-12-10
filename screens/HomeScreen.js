@@ -8,10 +8,14 @@ import { getNamesOfCategories } from '../components/Firebase/firebase';
 import AppButton from '../components/AppButton';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Spinner from '../components/Spinner';
-
+import EStyleSheet from 'react-native-extended-stylesheet';
 const win = Dimensions.get('window');
 
 export default function HomeScreen({navigation}) {
+  EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
+
+  });
+
   useStatusBar('dark-content');
 
  
@@ -54,7 +58,6 @@ export default function HomeScreen({navigation}) {
 
   useEffect(() => {
     const getData = async () => {
-
       let new_data = await getNamesOfCategories()
       setIsLoading(false)
       setData(new_data)
@@ -86,7 +89,7 @@ export default function HomeScreen({navigation}) {
     );
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background

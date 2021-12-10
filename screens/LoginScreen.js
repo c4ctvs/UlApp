@@ -45,8 +45,11 @@ export default function LoginScreen({ navigation }) {
   async function handleOnLogin(values) {
     const { email, password } = values;
     try {
-      setIsLoading(true)
+
       await loginWithEmail(email, password);
+      setIsLoading(true)
+      console.log('zaloogowano')
+
       } catch (error) {
       setLoginError(error.message);
     }

@@ -7,8 +7,12 @@ import { getDescription, updateAv  } from '../components/Firebase/firebase';
 import ColorsB from '../utils/colors.js'
 import NextBackButton from '../components/NextBackButton'
 import Spinner from '../components/Spinner';
-export default function DescriptionScreen({ route, navigation}) {
+import EStyleSheet from 'react-native-extended-stylesheet';
 
+export default function DescriptionScreen({ route, navigation}) {
+  EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
+
+  });
 const screen = route.params;
 
 let update = async () => {
@@ -51,15 +55,7 @@ return(
                     {data.subtitle ? <Text style={styles.subtitle}> {data.subtitle} </Text> : <></>}
                     {data.subtitle2 ?<Text style={styles.subtitle}> {data.subtitle2} </Text> :<></>}
                     
-                    {data.greenField ?<Text style={{
-                                  color: '#3d7849',
-                                  fontFamily:'sans-serif-medium',
-                                  fontSize: 22,
-                                  textAlign:'center',
-                                  textTransform:'uppercase',
-                                  backgroundColor: '#c2c2c2',
-                   
-                                  padding: 15}}> {data.greenText} </Text> :<></>}
+                    {data.greenField ?<Text style={styles.greenField}> {data.greenText} </Text> :<></>}
                    
                    {data.subtitle3 ? <Text style={styles.subtitle}> {data.subtitle3} </Text> :<></>}
                    {data.summary ?<Text style={styles.summary}> {data.summary} </Text> : <></>}
@@ -81,7 +77,16 @@ return(
     )
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
+  greenField:{
+    color: '#3d7849',
+    fontFamily:'sans-serif-medium',
+    fontSize: '1.5rem',
+    textAlign:'center',
+    textTransform:'uppercase',
+    backgroundColor: '#c2c2c2',
+    padding: '5%'},
+
     buttonsContainer:{
       flexDirection:'row',
       justifyContent:'flex-end',
@@ -95,13 +100,13 @@ const styles = StyleSheet.create({
     text: {
       color: 'white',
       textAlign: 'center',
-      fontSize: 16,
+      fontSize: '1rem',
       marginHorizontal: 12
   
     },
     title: {
-      marginTop: 120,
-      fontSize: 16,
+      marginTop: '20%',
+      fontSize: '1rem',
       color: 'white',
       textAlign: 'center',
       fontFamily:'sans-serif-light'
@@ -109,21 +114,21 @@ const styles = StyleSheet.create({
     },
     
     subtitle: {
-      fontSize: 16,
+      fontSize: '1rem',
       color: 'white',
       textAlign: 'center',
-      marginHorizontal:30,
+      marginHorizontal:'6%',
       fontFamily:'sans-serif-light',
-      margin:30
+      margin:'6%'
   
     },
     summary: {
-        fontSize: 16,
+        fontSize: '1rem',
         color: 'white',
         textAlign: 'right',
-        marginHorizontal:30,
+        marginHorizontal:'6%',
         fontFamily:'sans-serif-light',
-        marginTop:20,
+        marginTop:'6%',
         textTransform: 'uppercase'
          
       }

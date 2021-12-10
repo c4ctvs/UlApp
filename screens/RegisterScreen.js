@@ -71,9 +71,7 @@ export default function RegisterScreen({ navigation }) {
       Alert.alert(error.message);
     }
   }
-  const [modalVisible, setModalVisible] = useState(true);
-
-
+  
   if (isLoading) {
     return <Spinner />;
   }

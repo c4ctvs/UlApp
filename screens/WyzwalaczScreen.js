@@ -8,12 +8,19 @@ import AppButton from "../components/AppButton";
 import { ScrollView } from 'react-native-gesture-handler'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {sendWyzwalacze, getWyzwalacze} from '../components/Firebase/firebase'
+import EStyleSheet from 'react-native-extended-stylesheet';
+
+
+
 let i=0;
 let x_, y_;
 const win = Dimensions.get('window');
 export default function WyzwalaczScreen({ route, navigation}) {
+  EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
 
-let [elements, setElements] = useState([])
+  });
+
+let [elements, setElements] = useState([''])
 const [modalVisible, setModalVisible] = useState(false)
 
 useEffect(() => {
@@ -130,9 +137,9 @@ return (
        
  
     <AddButton onPress={() => setModalVisible(true)} />
-    <View style={{width:'25%', alignSelf:'flex-end', margin:20, top:'33.9%'}}><AppButton title="Wyślij" color={"white"} onPress={()=> handleOnSend()} /></View>
+    <View style={{width:'25%', alignSelf:'flex-end', margin:'5%', top:'33.9%'}}><AppButton title="Wyślij" color={"white"} onPress={()=> handleOnSend()} /></View>
    {modalVisible?<MyModal visible={modalVisible}/>:<></>} 
-   { 
+   {
        elements.map(element =>{
             return <MyDraggable onDragRelease={(e) => {element.x_=e.nativeEvent.pageX, element.y_= e.nativeEvent.pageY;}} x_={element.x_} y_={element.y_} colorid={element.colorid} text={element.clientName} onPress={()=>deleteWyzwalacz(element)}/>
         })
@@ -145,14 +152,14 @@ return (
 }
 
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
     container: {
  
         backgroundColor: Colors.background
         
       },
       hint: {
-        fontSize: 16,
+        fontSize: '1rem',
         color: 'white',
         textAlign: 'left',
        
@@ -171,7 +178,7 @@ const styles = StyleSheet.create({
         backgroundColor:'white'
       },
       text:{
-        fontSize:16,
+        fontSize:'1rem',
         color:'black',
       },
       greenTitle1: {
@@ -187,7 +194,7 @@ const styles = StyleSheet.create({
       },
       greenTitle: {
         marginTop:'14%',
-        fontSize: 30,
+        fontSize: '1.2rem',
 
         color: '#369e40',
         textAlign: 'center',
@@ -198,7 +205,7 @@ const styles = StyleSheet.create({
         position:'absolute',
         top: '53%',
         left:'5%',
-        fontSize: 20,
+        fontSize: '1.1rem',
         marginBottom:40,
         color: '#369e40',
         textAlign: 'center',

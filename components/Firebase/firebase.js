@@ -21,7 +21,8 @@ export const registerWithEmail = (email, password) =>{
 
   let db = firebase.firestore();
   db.collection("userInfo").doc(email).set({
-    "firstLogin":true
+    "firstLogin":true,
+    "wyzwalacze": [{0:'0', a:'a'}]
   })
 
   db.collection("userInfo").doc(email).collection("tasks").doc(JSON.stringify(0)).set({
@@ -66,7 +67,26 @@ export const registerWithEmail = (email, password) =>{
   }
 
 }
+const reauthenticate = async (currentPassword) => {
+  var user = firebase.auth().currentUser;
+  var cred = firebase.auth.EmailAuthProvider.credential(
+      user.email, currentPassword);
+  let re = await user.reauthenticateWithCredential(cred);
 
+  return re
+}
+export const changePassword = async (data) => {
+    let currentPassword = data.oldPassword
+    let newPassword = JSON.stringify(data.newPassword)
+    console.log("new" + newPassword)
+    reauthenticate(currentPassword).then(() => {
+      var user = firebase.auth().currentUser;
+      user.updatePassword(newPassword).then(() => {
+        return "Haslo zostalo zmienione!";
+      }).catch((error) => {console.log(error); return "W formularzu są błędy, spróbuj ponownie"; })
+    }).catch((error) => {console.log(error); return "W formularzu są błędy, spróbuj ponownie"; });
+  }
+ 
 
 export const getUserData = async (topic, doc) => {
   let db = firebase.firestore();
@@ -93,7 +113,6 @@ export const findQuestion = async() =>{
      let values = await db.collection("userInfo").doc(user.email).collection("tasks").doc(JSON.stringify(j)).collection("days").get()
      values.forEach((doc) =>{
        if(doc.data().firstLoginToday == true){
-          console.log("TRUTRURUTRUTRUTRURTUTRUTRUTRU")
           x = j
           y = i
           found = true
@@ -198,16 +217,27 @@ export const sendZasobki = async(week, day, ilosc) =>{
   let db = firebase.firestore();
   const user = firebase.auth().currentUser;
 
-
+  let zasobki = await db.collection("userInfo").doc(user.email).get()
+  zasobki = zasobki.data().zasobki
+  zasobki = parseInt(zasobki)
   db.collection("userInfo").doc(user.email).collection("tasks").doc(JSON.stringify(week)).collection("days").doc(JSON.stringify(day)).update({
     "askedQuestion":true,
   })
 
   db.collection("userInfo").doc(user.email).update({
-    "zasobki":ilosc,
+    "zasobki":parseInt(zasobki + ilosc),
   })
 }
 
+export const getZasobki = async() =>{
+  let db = firebase.firestore();
+  const user = firebase.auth().currentUser;
+
+  let zasobki  = await db.collection("userInfo").doc(user.email).get()
+
+  zasobki = zasobki.data().zasobki
+  return zasobki
+}
 
 export const sendWyzwalacze = async(values) =>{
   let db = firebase.firestore();
@@ -275,13 +305,27 @@ export const sendData = async(topic, doc, data) =>{
     })
   }
 
+
+  let zasobki = await db.collection("userInfo").doc(user.email).get()
+  zasobki = zasobki.data().zasobki
+  if(zasobki){
+    zasobki = parseInt(zasobki)
+  db.collection("userInfo").doc(user.email).update({
+    "zasobki":parseInt(zasobki + 2),
+  })}
+  else{
+    db.collection("userInfo").doc(user.email).update({
+      "zasobki":2,
+    })
+  }
+
 }
 
 export const sendPretest = async(data) =>{
   let db = firebase.firestore();
   const user = firebase.auth().currentUser;
 
-  db.collection("userInfo").doc(user.email).set({
+  db.collection("userInfo").doc(user.email).update({
     "firstLogin":false
   })
 }

@@ -6,14 +6,18 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { getTask } from '../components/Firebase/firebase';
 import ColorsB from '../utils/colors.js'
 import RangeSlider, { Slider } from 'react-native-range-slider-expo';
+import EStyleSheet from 'react-native-extended-stylesheet';
 import NextBackButton from '../components/NextBackButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { sendData } from '../components/Firebase/firebase';
 import Dialog from "react-native-dialog";
 import Spinner from '../components/Spinner';
+const win = Dimensions.get('window');
 
 export default function StartActivity({ route, navigation}) {
+  EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
 
+  });
 const screen = route.params;
 
 const [doc, setDocs] = useState([])
@@ -83,31 +87,30 @@ return(
             doc.map((data) => {
             return(
                 <View style={{ width, height }} >
-                    {data.weekTitle ? <Text style={styles.weekTitle}>{data.weekTitle}</Text> : <></>}
-                    {data.weekSubtitle ? <Text style={styles.weekSubtitle}>{data.weekSubtitle}</Text> : <></>}
+                    {data.weekTitle ? <Text style={styles.weekTitle}>{data.weekTitle}</Text>:<></>}
+                    {data.weekSubtitle ? <Text style={styles.weekSubtitle}>{data.weekSubtitle}</Text>:<></>}
                 <View style={{ height:height*0.75, justifyContent:'center', alignContent:'center', top:'13%'}}>
-                    {data.greenTitle ? data.greenTitle == "ZADANIE" ? <Text style={styles.greenTitle}><MaterialCommunityIcons name="square-edit-outline" color={"#ffffff"} size={50} />  {data.greenTitle}</Text>: <Text style={styles.greenTitle}>{data.greenTitle}</Text> : <></>}
+                    {data.greenTitle ? data.greenTitle == "ZADANIE" ?<Text style={styles.greenTitle}><MaterialCommunityIcons name="square-edit-outline" color={"#ffffff"} size={50} />{data.greenTitle}</Text>:<Text style={styles.greenTitle} >{data.greenTitle}</Text>:<></>}
                     
                     {data.textInput ?   <TextInput
                                         multiline
                                         style={styles.input}
                                         placeholder={"Wpisz notatkę"}
                                         onChangeText={text => setText(text)}
-                                      /> : <></>}
-                    {data.icon ? <Text style={{textAlign:'center', marginTop:40}}><MaterialCommunityIcons name={data.icon} size={100} color={"#369e40"}/></Text> : <></>}                  
-                    {data.greenSubtitle ? <Text style={styles.greenSubtitle}> {data.greenSubtitle} </Text> : <></>}
-                    {data.greenSubtitleIt ? <Text style={styles.greenSubtitleIt}> {data.greenSubtitleIt} </Text> : <></>}
-                    {data.subtitle ? <Text style={styles.subtitle}> {data.subtitle} </Text> : <></>}
-                    {data.line ? <Text style={{ borderBottomColor: '#3d7849',
+                                      /> :<></>}
+                    {data.icon ? <Text style={{textAlign:'center', marginTop:40}}><MaterialCommunityIcons name={data.icon} size={100} color={"#369e40"}/></Text>:<></>}                  
+                    {data.greenSubtitle ?<Text style={styles.greenSubtitle}> {data.greenSubtitle} </Text> :<></>}
+                    {data.greenSubtitleIt ?<Text style={styles.greenSubtitleIt} > {data.greenSubtitleIt} </Text>:<></>}
+                    {data.subtitle ?<Text style={styles.subtitle} > {data.subtitle} </Text>: <></>}
+                    {data.line ?<Text style={{ borderBottomColor: '#3d7849',
                                    borderBottomWidth: 6,
                                    justifyContent:'center',
-                        
-                                   
-                                   }}></Text> : <></>}
+ 
+                                   }}></Text>:<></>}
                     {data.list2 ?<FlatList
                           data={data.list2}
-                          renderItem={({item}) => <Text style={styles.list}>{item}</Text>}/> :<></>}         
-                    {data.subtitle2 ?<Text style={styles.subtitle}> {data.subtitle2} </Text> : <></>}
+                          renderItem={({item}) =><Text style={styles.list}>{item}</Text>}/>:<></>}         
+                    {data.subtitle2 ?<Text style={styles.subtitle}> {data.subtitle2} </Text>:<></>}
                 
                     {data.slider ?<View style={styles.sliderView}><Slider min={0} max={10} step={1}
                          valueOnChange={value => setValue(value)}
@@ -121,11 +124,11 @@ return(
                      {data.list ?<FlatList
                                     style={styles.flatlist}
                                     data={data.list}
-                                    renderItem={({item}) => <Text style={styles.list}>{item}</Text>}/>:<></>}
-                    {data.subtitle3 ?<Text style={styles.subtitle}> {data.subtitle3} </Text> : <></>}
+                                    renderItem={({item}) => <Text  style={styles.list}>{item}</Text>}/>:<></>}
+                    {data.subtitle3 ?<Text  style={styles.subtitle}> {data.subtitle3} </Text>: <></>}
                   
-                    {data.subtitleIt ?<Text style={styles.subtitleIt}> {data.subtitleIt} </Text> : <></>}
-                    {data.summary  ?<Text style={styles.summary}> {data.summary} </Text> : <></>}
+                    {data.subtitleIt ?<Text style={styles.subtitleIt}> {data.subtitleIt} </Text>: <></>}
+                    {data.summary  ?<Text  style={styles.summary}> {data.summary} </Text> : <></>}
                  
                     {data.send  ?  <View style={{width:"50%", left:'25%'}}><NextBackButton title="Wyślij" onPress = {() => showDialog(true)}/></View> : <></>} 
                     {data.button1 ?
@@ -152,31 +155,23 @@ return(
     )
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   parent:{
     flexDirection:'row',
     justifyContent:'center',
-    margin:30,
-    marginTop:50
+    margin:'15%',
   },
   sliderView:{
-    marginTop:40,
+    marginTop:'15%',
     width:'75%',
     marginHorizontal:"15%"
   },
-  buttons:{
-    position:'absolute',
-    bottom:20,
-    flexDirection:'row',
-    justifyContent:'space-between',
-    
-  },
     input: {
-      height: 300,
-      margin: 12,
-      marginVertical:30,
+      height: win.height * 0.4,
+      margin: '5%',
+      marginVertical:'7%',
       borderWidth: 1,
-      padding: 10,
+      padding:'1rem',
       backgroundColor: ColorsB.lightGrey
     },
     
@@ -189,12 +184,12 @@ const styles = StyleSheet.create({
     padding:0,
   },
   list:{
-    fontSize: 16,
+
     color: 'white',
     textAlign: 'center',
-
+    fontSize:'1rem',
     fontFamily:'sans-serif-light',
-    padding:10,
+    padding:'2%',
 
   },
     image: {
@@ -205,13 +200,13 @@ const styles = StyleSheet.create({
     text: {
       color: 'white',
       textAlign: 'center',
-      fontSize: 16,
+      fontSize:'1rem',
       marginHorizontal: 12
   
     },
     title: {
-      marginTop: 120,
-      fontSize: 16,
+      marginTop: '20%',
+      fontSize:'1rem',
       color: 'white',
       textAlign: 'center',
       fontFamily:'sans-serif-light'
@@ -219,9 +214,9 @@ const styles = StyleSheet.create({
     },
     weekTitle: {
      position:'absolute',
-      top: 40,
-      left: 20,
-      fontSize: 16,
+      top: '3%',
+      left: '5%',
+      fontSize:'1rem',
       color: '#369e40',
       textAlign: 'left',
       fontFamily:'sans-serif'
@@ -229,9 +224,9 @@ const styles = StyleSheet.create({
     },
     weekSubtitle: {
       position:'absolute',
-      top: '7%',
-      left: 20,
-      fontSize: 18,
+      top: '5%',
+      left: '5%',
+      fontSize:'1.2rem',
   
       color: '#369e40',
       textAlign: 'left',
@@ -241,7 +236,7 @@ const styles = StyleSheet.create({
    greenTitle: {
 
 
-      fontSize: 30,
+      fontSize:'2rem',
       alignSelf:'center',
       color: '#369e40',
       textAlign: 'center',
@@ -250,60 +245,58 @@ const styles = StyleSheet.create({
  
     },
     subtitle: {
-      fontSize: 16,
+      fontSize:'1rem',
       color: 'white',
       textAlign: 'center',
-      marginHorizontal:10,
+      marginHorizontal:'6%',
       fontFamily:'sans-serif-light',
-      padding:30,
+      padding:'2%',
 
     },
     subtitleIt: {
-      fontSize: 16,
+      fontSize:'1rem',
       color: 'white',
       textAlign: 'center',
-      marginHorizontal:10,
+      marginHorizontal:'5%',
       fontFamily:'sans-serif-light',
  
       fontStyle:'italic'
     },
     greenSubtitle: {
    
-      fontSize: 16,
+
       color: '#369e40',
       textAlign: 'center',
-      marginVertical:40,
+      marginVertical:'10%',
       fontFamily:'sans-serif-medium',
       padding:30,
       backgroundColor: '#c2c2c2',
   
     },
     greenSubtitleIt: {
-      fontSize: 16,
       color: '#369e40',
       textAlign: 'center',
-      marginHorizontal:40,
+      marginHorizontal:'15%',
       fontFamily:'sans-serif-medium',
       fontStyle:'italic'
   
     },
     summary: {
-        fontSize: 16,
+        fontSize:'1rem',
         color: 'white',
         textAlign: 'center',
-        marginHorizontal:30,
+        marginHorizontal:'7%',
         fontFamily:'sans-serif-light',
         marginTop:100,
          
       },
       hint: {
-        fontSize: 16,
         color: 'white',
         textAlign: 'left',
-       
+        fontSize:'1rem',
         fontFamily:'sans-serif-light',
-        marginTop:20,
-        padding:30,
+        marginTop:'15%',
+        padding:'10%',
         width:'75%',
         backgroundColor: '#3d7849',
 

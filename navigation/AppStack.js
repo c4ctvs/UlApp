@@ -12,6 +12,8 @@ import TaskDetails from '../screens/TaskDetails'
 import FLoginToday from '../screens/FLoginToday'
 import DidTaskScreen from '../screens/DidTaskScreen'
 import DidntTaskScreen from '../screens/DidntTaskScreen'
+import ChangePasswordScreen from '../screens/ChangePasswordScreen';
+
 const Stack = createStackNavigator();
 
 
@@ -30,6 +32,7 @@ export default function AppStack() {
       <Stack.Screen name="FLoginToday" component={FLoginToday} />
       <Stack.Screen name="DidTask" component={DidTaskScreen} />
       <Stack.Screen name="DidntTask" component={DidntTaskScreen} />
+      <Stack.Screen name="ChangePassword" component={ChangePasswordScreen}/>
     </Stack.Navigator>
 
   );

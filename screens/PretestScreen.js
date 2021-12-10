@@ -7,6 +7,8 @@ import NextBackButton from '../components/NextBackButton';
 import { sendPretest } from '../components/Firebase/firebase';
 import AppButton from '../components/AppButton';
 import RangeSlider, { Slider } from 'react-native-range-slider-expo';
+import EStyleSheet from 'react-native-extended-stylesheet';
+
 const { width, height } = Dimensions.get('window');
 
 const doc = [
@@ -93,6 +95,9 @@ let handleOnSend = async (navigation) =>{
 
 
 export default function PretestScreen({navigation}) {
+  EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
+
+  });
   const [value, setValue] = useState(0);
   return (
     <SafeView style={styles.container}>
@@ -132,6 +137,8 @@ export default function PretestScreen({navigation}) {
                     {data.subtitle3 ?<Text style={styles.subtitle}> {data.subtitle3} </Text> : <></>}
                   
                          
+                    
+                    {data.summary  ?<View style={{marginHorizontal:'12%',alignSelf:'flex-end',padding:22,marginVertical:5,backgroundColor:'#133f63', borderRadius:100, width:'75%'}}><Text style={styles.summary}> {data.summary} </Text></View>: <></>}
                     {data.slider ?  <View style={styles.sliderView}><Slider min={0} max={10} step={1}
                          valueOnChange={value => setValue(value)}
                          initialValue={12}
@@ -139,11 +146,12 @@ export default function PretestScreen({navigation}) {
                          valueLabelsBackgroundColor='grey'
                          inRangeBarColor='grey'
                          outOfRangeBarColor='#369e40'
+                         valueLabelsTextColor="white"
+                         rangeLabelsTextColor="#e0e0e0"
                 
                     /></View>:<></>}
-                    
-                    {data.summary  ?<Text style={styles.summary}> {data.summary} </Text> : <></>}
-                    {data.send  ? <View style={{position:'absolute', bottom:'25%',width:'50%', left:'25%'}}><NextBackButton title="Zakończ" onPress={() => handleOnSend(navigation)}/></View> : <></>} 
+             
+                    {data.send  ? <View style={{position:'absolute', bottom:'20%',width:'50%', left:'25%'}}><NextBackButton title="Zakończ" onPress={() => handleOnSend(navigation)}/></View> : <></>} 
              
              
                 </View>
@@ -156,9 +164,9 @@ export default function PretestScreen({navigation}) {
     
     )
 }
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   sliderView:{
-    marginTop:40,
+    marginTop:'10%',
     width:'75%',
     marginHorizontal:"15%"
   },
@@ -172,14 +180,14 @@ const styles = StyleSheet.create({
     width: '30%',
   },
   menuButton:{
-    margin:30,
+    margin:'15%',
     padding:20
   },
   buttons:{
-    fontSize:12,
+    fontSize:"0.8rem",
   }, 
   greenTitle: { 
-    fontSize: 22,
+    fontSize:"1.4rem",
     marginBottom:'10%',
     color: '#369e40',
     textAlign: 'center',
@@ -188,49 +196,30 @@ const styles = StyleSheet.create({
   },
   greenText: { 
     position:'absolute',
-    top:'5%',
-    fontSize: 20,
+    top:'10%',
+    left:'20%',
+    fontSize:"1.6rem",
     color: '#369e40',
     textAlign:'right',
     margin:'5%',
     fontFamily:'sans-serif-medium'
   },
   subtitle: {
-    fontSize: 16,
+    fontSize:"1rem",
     color: 'white',
     textAlign: 'center',
-    marginHorizontal:10,
+    marginHorizontal:'5%',
     fontFamily:'sans-serif-light',
     padding:30
 
   },
   summary: {
-      fontSize: 16,
+      fontSize:"1rem",
       color: 'white',
       textAlign: 'center',
-      marginHorizontal:30,
+      marginHorizontal:'5%',
       fontFamily:'sans-serif-light',
-      marginTop:50,
+    
   },
 });
 
-
-var customStyles8 = StyleSheet.create({
-  container: {
-    height: 30,
-  },
-  track: {
-    height: 2,
-    backgroundColor: '#303030',
-  },
-  thumb: {
-    width: 100,
-    height: 100,
-    backgroundColor: '#31a4db',
-    borderRadius: 10 / 2,
-    shadowColor: '#31a4db',
-    shadowOffset: {width: 0, height: 0},
-    shadowRadius: 2,
-    shadowOpacity: 1,
-  }
-});
