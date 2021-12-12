@@ -11,10 +11,16 @@ import IconButton from '../components/IconButton';
 import FormErrorMessage from '../components/Forms/FormErrorMessage';
 import { validateCode } from '../components/Firebase/firebase';
 import useStatusBar from '../hooks/useStatusBar';
+import EStyleSheet from 'react-native-extended-stylesheet';
+
 
 const win = Dimensions.get('window');
 
 export default function RegisterScreen({ navigation }) {
+
+    EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
+  
+    });
   useStatusBar('light-content');
 
 
@@ -72,7 +78,7 @@ export default function RegisterScreen({ navigation }) {
 
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   container: {
     backgroundColor: Colors.background
     
@@ -83,13 +89,13 @@ const styles = StyleSheet.create({
   backButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 10
+    marginVertical: '2%'
   },
   logo: {
 
-    marginTop:160,
-    width: 400,
-    height: 400,
+    marginTop:'30%',
+    width: win.width,
+    height: win.height/2,
     opacity:0.5,
     position:'absolute'
   },

@@ -5,6 +5,7 @@ import Colors from '../utils/colors'
 import MyDraggable from '../components/myDraggable'
 import SelectDropdown from 'react-native-select-dropdown'
 import AppButton from "../components/AppButton";
+import SendButton from "../components/SendButton";
 import { ScrollView } from 'react-native-gesture-handler'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {sendWyzwalacze, getWyzwalacze} from '../components/Firebase/firebase'
@@ -130,7 +131,7 @@ return (
        <Text style={{ borderBottomColor: '#3d7849',
                                    borderBottomWidth: 6,
                                    justifyContent:'center',
-                                    marginTop:'100%'
+                                    marginTop:'90%'
                                    
                                    }}></Text> 
        <Text style={styles.greenTitle2}>Zawodowe</Text>
@@ -142,9 +143,9 @@ return (
         })
     }
        
-    <View style={{width:'25%',justifyContent:'space-between', flexDirection:'row',  margin:'5%', marginTop:'60%'}}>
+    <View style={{justifyContent:'space-between', margin:'5%', marginTop:'70%'}}>
         <AddButton onPress={() => setModalVisible(true)} />
-        <AppButton title="Wyślij" color={"white"} onPress={()=> handleOnSend()} />
+        <View style ={{width:'30%', alignSelf:'flex-end'}}><SendButton title="Wyślij" color={"white"} onPress={()=> handleOnSend()} /></View>
     </View>
     </View>
   

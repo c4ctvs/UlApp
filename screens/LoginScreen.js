@@ -12,6 +12,10 @@ import { loginWithEmail } from '../components/Firebase/firebase';
 import FormErrorMessage from '../components/Forms/FormErrorMessage';
 import useStatusBar from '../hooks/useStatusBar';
 import Spinner from '../components/Spinner';
+import EStyleSheet from 'react-native-extended-stylesheet';
+
+
+
 
 const win = Dimensions.get('window');
 const validationSchema = Yup.object().shape({
@@ -26,6 +30,9 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function LoginScreen({ navigation }) {
+  EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
+
+  });
   useStatusBar('light-content');
   const [isLoading, setIsLoading] = useState(false);
   const [passwordVisibility, setPasswordVisibility] = useState(true);
@@ -45,7 +52,7 @@ export default function LoginScreen({ navigation }) {
   async function handleOnLogin(values) {
     const { email, password } = values;
     try {
-
+      setIsLoading(true)
       await loginWithEmail(email, password);
       setIsLoading(true)
       console.log('zaloogowano')
@@ -109,19 +116,19 @@ export default function LoginScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   container: {
-    padding: 15,
+    padding: '5%',
     backgroundColor: Colors.background
   },
   footerButtonContainer: {
-    marginVertical: 15,
+    marginVertical: '5%',
     justifyContent: 'center',
     alignItems: 'center'
   },
   forgotPasswordButtonText: {
     color: Colors.white,
-    fontSize: 18,
+    fontSize: '0.8rem',
     fontWeight: '600'
   },
   backButton: {
@@ -131,7 +138,7 @@ const styles = StyleSheet.create({
   
   logo: {
     padding:0,
-    marginTop:160,
+    marginTop:'20%',
     alignSelf:'center',
     opacity:0.5,
     position:'absolute',

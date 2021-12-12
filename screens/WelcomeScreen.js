@@ -74,6 +74,6 @@ const styles = EStyleSheet.create({
   buttonContainer: {
     padding: '5%',
     paddingBottom: '10%',
-    width: '100%'
+    width: '95%'
   }
 });

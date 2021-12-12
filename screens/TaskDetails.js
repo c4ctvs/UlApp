@@ -4,9 +4,19 @@ import SafeView from '../components/SafeView';
 import Colors from '../utils/colors';
 import { getUserData } from '../components/Firebase/firebase';
 import Spinner from '../components/Spinner';
+import EStyleSheet from 'react-native-extended-stylesheet';
+
+
+
 const win = Dimensions.get('window');
 const categories = ['KONTRAKTOWANIE', 'POCZUCIE WŁASNEJ SKUTECZNOŚCI', 'EMOCJE', 'SYTUACJE TRUDNE']
 export default function MaterialsScreen({navigation, route}) {
+
+  EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
+
+  });
+
+
 const [data, setData] = useState([])
 const [isLoading, setIsLoading] = useState(true)
 
@@ -31,7 +41,7 @@ useEffect(() => {
 
         <View style={{height:win.height*0.75, alignContent:'center', top:'13%'}}>
             <Text style={styles.subtitle}>Twoje notatki:</Text>
-            {data[route.params.id]?<Text style={styles.text}>{data[route.params.id].data}</Text>:<></>}
+            {data[route.params.id]?<Text style={styles.text}>{data[route.params.id].data}</Text>:data[route.params.id].data== ""? <Text style={styles.text}>Tego dnia nie wykonałeś żadnych notatek</Text>:<></>}
             <Text style={styles.subtitle2}>Twoje napięcie:</Text>
             {data[route.params.id]?<Text style={styles.text}>{data[route.params.id].value}</Text>:<></>}
             </View> 
@@ -44,9 +54,9 @@ useEffect(() => {
     );
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   subtitleDone: {
-    fontSize: 18,
+    fontSize: '0.8rem',
     color: 'white',
     textAlign: 'center',
     fontFamily:'sans-serif-light',
@@ -59,10 +69,10 @@ const styles = StyleSheet.create({
   },
   weekTitle: {
     position:'absolute',
-     top: 40,
-     left: 20,
-     fontSize: 16,
-     color: '#369e40',
+    top: '5%',
+     left: '5%',
+     fontSize: '0.9rem',
+          color: '#369e40',
      textAlign: 'left',
      fontFamily:'sans-serif'
  
@@ -70,8 +80,9 @@ const styles = StyleSheet.create({
    weekSubtitle: {
      position:'absolute',
      top: '7%',
-     left: 20,
-     fontSize: 18,
+     left: '5%',
+     fontSize: '1rem',
+
  
      color: '#369e40',
      textAlign: 'left',
@@ -79,8 +90,8 @@ const styles = StyleSheet.create({
  
    },
    subtitle: {
-    marginTop:20,
-    fontSize: 20,
+    marginTop:'5%',
+    fontSize: '0.9rem',
     color: 'white',
     textAlign: 'center',
     marginHorizontal:10,
@@ -88,7 +99,7 @@ const styles = StyleSheet.create({
 
   },
   text: {
-    fontSize: 16,
+    fontSize: '0.8rem',
     color: 'white',
     textAlign: 'center',
     marginHorizontal:10,
@@ -96,8 +107,8 @@ const styles = StyleSheet.create({
 
   },
   subtitle2: {
-    marginTop:80,
-    fontSize: 20,
+    marginTop:'15%',
+    fontSize: '0.9rem',
     color: 'white',
     textAlign: 'center',
     marginHorizontal:10,
