@@ -12,6 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { sendData } from '../components/Firebase/firebase';
 import Dialog from "react-native-dialog";
 import Spinner from '../components/Spinner';
+import Dots from '../components/Dots'
 const win = Dimensions.get('window');
 
 export default function StartActivity({ route, navigation}) {
@@ -56,8 +57,6 @@ let handleOnSend = async (doc, data, value) =>{
 
  
 }
-
-
 console.log("id: " + JSON.stringify(route))
 useEffect(() => {
     const getDocs = async () => {
@@ -66,14 +65,14 @@ useEffect(() => {
         setIsLoading(false)
     }
     getDocs()
+    
 }, [])
-
 
 
 if (isLoading) {
   return <Spinner />;
 }
-
+let counter = 0
 return(
     <SafeAreaView style={{   justifyContent: 'center',alignItems: 'center',flex: 1,  backgroundColor: ColorsB.background}}>
         <ScrollView  
@@ -84,6 +83,7 @@ return(
 
           >
         {
+        
             doc.map((data) => {
             return(
                 <View style={{ width, height }} >
@@ -137,6 +137,7 @@ return(
                         </View>: <></>}
                   
                     {data.hint ?<Text style={styles.hint}> {data.hint} </Text> : <></>}
+                    <View style={styles.dots}><Dots howMany={doc.length} current={counter++}/></View>
                     </View>
                     <Dialog.Container visible={visibility}>
                         <Dialog.Title>Zakończenie zadania</Dialog.Title>
@@ -149,6 +150,7 @@ return(
                 </View>
             )
             })
+          
         }
         </ScrollView>
     </SafeAreaView>
@@ -156,6 +158,12 @@ return(
 }
 
 const styles = EStyleSheet.create({
+  dots:{
+    position:'absolute',
+    bottom:'-5%',
+    transform: [{ rotate: '-90deg'}],
+    left:'48%'
+  },
   parent:{
     flexDirection:'row',
     justifyContent:'center',

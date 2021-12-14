@@ -8,6 +8,7 @@ import ColorsB from '../utils/colors.js'
 import NextBackButton from '../components/NextBackButton'
 import Spinner from '../components/Spinner';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import Dots from '../components/Dots';
 
 export default function DescriptionScreen({ route, navigation}) {
   EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
@@ -38,7 +39,7 @@ if (isLoading) {
 }
 
 
-
+let counter = 0;
 return(
     <SafeAreaView style={{   justifyContent: 'center',alignItems: 'center',flex: 1,  backgroundColor: ColorsB.background}}>
         <ScrollView  
@@ -64,6 +65,7 @@ return(
                                    borderBottomWidth: 6,
                               
                                    }}></Text> : <></>}
+                   <View style={styles.dots}><Dots howMany={doc.length} current={counter++}/></View>
                       <View style={styles.buttonsContainer}>
                      
                        {data.button ? <NextBackButton title="Dalej" onPress={() => { navigation.navigate('ChooseDayScreen', {id: screen.id})}}/> : <></>}
@@ -78,6 +80,12 @@ return(
 }
 
 const styles = EStyleSheet.create({
+  dots:{
+    position:'absolute',
+    transform: [{ rotate: '-90deg'}],
+    left:'48%',
+    bottom:'10%'
+  },
   greenField:{
     color: '#3d7849',
     fontFamily:'sans-serif-medium',
